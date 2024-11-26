@@ -42,7 +42,6 @@ const faqs = [
 export default function FAQ() {
   return (
     <section className="flex flex-col justify-center h-screen snap-start bg-black text-white py-24">
-      {/* <div className="container mx-auto px-4 "> */}
         <div className="w-[95%] md:w-[90%] max-w-[1600px] mx-auto xl:flex items-start gap-16 xl:gap-24 xl:justify-between">
           <motion.h2 
             initial={{ opacity: 0.2, y: 20 }}
@@ -66,7 +65,6 @@ export default function FAQ() {
             )}
           </Accordion>
         </div>
-      {/* </div> */}
     </section>
   )
 }
