@@ -1,9 +1,10 @@
 import { Testimonials, Footer, Hero, FAQ } from '@/components/landing';
+import Carousel from '@/components/landing/Section1/Carousel';
 import React from 'react';
 
 const LandingPage = () => {
   return (
-    <main className="h-screen snap-y snap-mandatory overflow-y-scroll">
+    <main className="md:h-screen md:snap-y md:snap-mandatory overflow-y-scroll">
       {/* Hero Section */}
       {/* <section
         className="relative h-screen bg-cover bg-center snap-start"
@@ -19,16 +20,20 @@ const LandingPage = () => {
       <Hero />
 
       {/* Section 1 */}
-      <section className="h-screen bg-[#0E0E0E] text-white snap-start flex items-center justify-center">
+      <section className="md:h-screen bg-[#0E0E0E] text-white md:snap-start flex items-center justify-center">
         <h2 className="text-4xl">Section 1</h2>
+      </section>
+
+      <section className="md:h-screen bg-[#0E0E0E] text-white md:snap-start flex items-center justify-center">
+        <Carousel />
       </section>
 
       <FAQ />
 
-      <section className="h-screen snap-start flex flex-col">
+      <section className="md:h-screen md:snap-start flex flex-col">
         <Testimonials />
       </section>
-      
+
       <section className=" snap-start flex flex-col">
         <Footer />
       </section>
