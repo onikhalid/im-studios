@@ -16,7 +16,7 @@ export default function BackgroundPerLine({
     backgroundColor = 'bg-[#1C1C1C]',
     textColor = 'text-white',
     padding = 'px-2 py-4',
-    fontSize = 'text-xl md:text-3xl lg:text-[3.125rem]',
+    fontSize = 'text-xl md:text-3xl lg:text-[3.125rem] xl:text-[3.25rem]',
     lineHeight = 'leading-relaxed'
 }: BackgroundPerLineProps) {
     const containerRef = useRef<HTMLDivElement>(null)

@@ -24,7 +24,7 @@ const LandingPage = () => {
         <h2 className="text-4xl">Section 1</h2>
       </section>
 
-      <section className="md:h-screen bg-[#0E0E0E] text-white md:snap-start flex items-center justify-center">
+      <section className="md:h-screen bg-[#0E0E0E] text-white md:snap-start flex items-center justify-center pt-40 overflow-hidden">
         <Carousel />
       </section>
 
