@@ -102,7 +102,7 @@ export default function Testimonials() {
                                     <p className="text-[#99999A] text-sm md:text-lg font-sans leading-loose mb-8 text-balance max-md:px-1.5">
                                         {testimonials[currentIndex].content}
                                     </p>
-                                 
+
                                 </motion.div>
                             </AnimatePresence>
                             <LinkButton variant="cta" size="cta" href="/book">
