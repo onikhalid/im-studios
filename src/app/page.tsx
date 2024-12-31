@@ -1,4 +1,5 @@
 import { Testimonials, Footer, Hero, FAQ } from '@/components/landing';
+import { ServicesSection } from '@/components/landing/services';
 import React from 'react';
 
 const LandingPage = () => {
@@ -18,12 +19,16 @@ const LandingPage = () => {
 
       <Hero />
 
-      {/* Section 1 */}
+      <section className="h-screen snap-start flex flex-col">
+        <ServicesSection />
+      </section>
+
       <section className="h-screen bg-[#0E0E0E] text-white snap-start flex items-center justify-center">
         <h2 className="text-4xl">Section 1</h2>
       </section>
 
       <FAQ />
+
 
       <section className="h-screen snap-start flex flex-col">
         <Testimonials />
