@@ -23,14 +23,14 @@ const LandingPage = () => {
         <ServicesSection />
       </section>
 
-      <section className="h-screen bg-[#0E0E0E] text-white snap-start flex items-center justify-center">
+      <section className="md:h-screen bg-[#0E0E0E] text-white md:snap-start flex items-center justify-center">
         <h2 className="text-4xl">Section 1</h2>
       </section>
 
       <FAQ />
 
 
-      <section className="h-screen snap-start flex flex-col">
+      <section className="md:h-screen md:snap-start flex flex-col">
         <Testimonials />
       </section>
       
