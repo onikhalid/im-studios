@@ -53,15 +53,18 @@ export default function FAQ() {
           </motion.h2>
 
           <Accordion type="single" collapsible className="w-full max-w-[750px]">
-            {faqs.map((faq, index) => 
-              <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-left text-lg font-sans md:font-semibold font-medium hover:text-white/90 no-underline lg:py-6">
-                  {faq.question}
-                </AccordionTrigger>
-                <AccordionContent className="text-[#99999A] font-sans md:max-w-[620px] text-balance text-sm md:text-base max-md:font-light leading-loose">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
+            {faqs.map((faq, index) => {
+              return (
+                <AccordionItem key={index} value={`item-${index}`}>
+                  <AccordionTrigger className="text-left text-lg font-sans md:font-semibold font-medium hover:text-white/90 no-underline lg:py-6">
+                    {faq.question}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-[#99999A] font-sans md:max-w-[620px] text-balance text-sm md:text-base max-md:font-light leading-loose">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              )
+            }
             )}
           </Accordion>
         </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 // import localFont from "next/font/local";
-import { Poppins, DM_Mono, DM_Sans } from 'next/font/google'
+import { Poppins, DM_Mono, DM_Sans, Bebas_Neue, Inter } from 'next/font/google'
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AppHeader } from "@/components/landing";
@@ -24,6 +24,20 @@ const FDM_Sans = DM_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
 })
+const FDM_Neue = Bebas_Neue({
+  display: "swap",
+  weight: ["400"],
+  variable: "--font-neue",
+  subsets: ["latin"],
+  fallback: ["sans-serif"],
+})
+const FInter = Inter({
+  display: "auto",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-inter",
+  subsets: ["latin"],
+})
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -38,7 +52,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(FPoppins.className, FDM_Mono.variable, FDM_Sans.variable, "relative")}
+        className={cn(FPoppins.className, FDM_Mono.variable, FDM_Sans.variable, FDM_Neue.variable, FInter.variable, "relative")}
       >
         <AppHeader/>
         {children}

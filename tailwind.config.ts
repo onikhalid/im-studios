@@ -55,7 +55,9 @@ export default {
   			poppins: ["var(--font-poppins)", "sans"],
   			mono: ["var(--font-mono)", "mono"],
   			archivo: ["var(--font-archivo)", "sans"],
-  			sans: ["var(--font-sans)", "sans"]
+  			sans: ["var(--font-sans)", "sans"],
+			neue: ["var(--font-neue)", "sans"],
+			inter: ["var(--font-inter)", "sans"]
   		},
   		animation: {
   			marquee: 'marquee 25s linear infinite',

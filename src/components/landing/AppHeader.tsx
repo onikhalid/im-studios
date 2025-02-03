@@ -17,11 +17,11 @@ export default function AppHeader() {
         },
         {
             name: "About us",
-            href: "#about"
+            href: "/about"
         },
         {
             name: "Contact us",
-            href: "#contact"
+            href: "/contact"
         }
     ]
 
