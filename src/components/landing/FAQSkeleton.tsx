@@ -1,25 +1,9 @@
-'use client'
+"use client"
 
 import { motion } from "framer-motion"
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
-import { useAppInfo } from "@/contexts/info"
-import FAQSkeleton from "./FAQSkeleton"
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 
-
-export default function FAQ() {
-
-
-  const { appInfo, isFetchingAppInfo } = useAppInfo()
-
-  if (isFetchingAppInfo) {
-    return <FAQSkeleton />
-  }
-
+export default function FAQSkeleton() {
   return (
     <section className="flex flex-col justify-center h-screen snap-start bg-black text-white py-24">
       <div className="w-[95%] md:w-[90%] max-w-[1600px] mx-auto xl:flex items-start gap-16 xl:gap-24 xl:justify-between">
@@ -33,18 +17,19 @@ export default function FAQ() {
         </motion.h2>
 
         <Accordion type="single" collapsible className="w-full max-w-[750px]">
-          {appInfo?.faqs?.map((faq, index) =>
+          {[...Array(5)].map((_, index) => (
             <AccordionItem key={index} value={`item-${index}`}>
               <AccordionTrigger className="text-left text-lg font-sans md:font-semibold font-medium hover:text-white/90 no-underline lg:py-6">
-                {faq.question}
+                <div className="h-6 w-3/4 bg-neutral-800 rounded animate-pulse"></div>
               </AccordionTrigger>
               <AccordionContent className="text-[#99999A] font-sans md:max-w-[620px] text-balance text-sm md:text-base max-md:font-light leading-loose">
-                {faq.answer}
+                <div className="h-20 bg-neutral-800 rounded animate-pulse"></div>
               </AccordionContent>
             </AccordionItem>
-          )}
+          ))}
         </Accordion>
       </div>
     </section>
   )
 }
+

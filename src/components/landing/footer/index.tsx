@@ -1,8 +1,19 @@
+'use client'
+
 import Link from "next/link"
 import { Facebook, Instagram, Linkedin, Send, Twitter } from 'lucide-react'
+import { useAppInfo } from "@/contexts/info"
+import FooterSkeleton from "./FooterSkeleton"
+
 
 export default function Footer() {
+
+  const {appInfo, isFetchingAppInfo} = useAppInfo()
+if(isFetchingAppInfo){
+  return <FooterSkeleton/>
+}
   return (
+    
     <footer className="bg-black text-white py-16">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center space-y-12">
@@ -16,14 +27,14 @@ export default function Footer() {
             {/* Left Social Icons */}
             <div className="flex items-center gap-4">
               <Link
-                href="#"
+                href={appInfo?.footer?.x_link || '#'}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
                 aria-label="Twitter"
               >
                 <Twitter className="w-5 h-5" />
               </Link>
               <Link
-                href="#"
+                href={appInfo?.footer?.telegram_link || "#"}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
                 aria-label="Telegram"
               >
@@ -56,21 +67,21 @@ export default function Footer() {
             {/* Right Social Icons */}
             <div className="flex items-center gap-4">
               <Link
-                href="#"
+                href={appInfo?.footer?.instagram_link || "#"}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </Link>
               <Link
-                href="#"
+                href={appInfo?.footer?.facebook_link || "#"}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </Link>
               <Link
-                href="#"
+                href={appInfo?.footer?.telegram_link || "#"}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
                 aria-label="LinkedIn"
               >
@@ -82,7 +93,7 @@ export default function Footer() {
           {/* Bottom Section */}
           <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-white/10">
             <p className="text-white/60 text-sm">
-              Copyright © 2024, IM STUDIOZ. All rights reserved
+              {appInfo?.footer?.copyright_text}
             </p>
             <div className="flex items-center gap-6">
               <Link
