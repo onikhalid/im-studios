@@ -4,48 +4,47 @@ import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { MoveLeft, MoveRight } from 'lucide-react'
 import { LinkButton } from "../ui"
+import { useAppInfo } from "@/contexts/info"
 
-interface Testimonial {
-    id: number
-    name: string
-    content: string
-}
 
-const testimonials: Testimonial[] = [
-    {
-        id: 1,
-        name: "Dave Santan",
-        content: "Lorem ipsum dolor sit amet consectetur. Vitae augue tortor at quisque est tempus enim. Aliquam malesuada consequat turpis ut faucibus. Aenean lorem vulputate aliquam suspendisse. Lacus orci gravida cras gravida nulla."
-    },
-    {
-        id: 2,
-        name: "John Smith",
-        content: "Vitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enim. Lorem ipsum dolor sit amet consectetur. Aliquam malesuada consequat turpis ut faucibus. Aenean lorem vulputate aliquam suspendisse. Lacus orci gravida cras gravida nulla."
-    },
-    {
-        id: 3,
-        name: "Emma Wilson",
-        content: "Aliquam malesuada consequat turpis ut faucibus. Lorem ipsum dolor sit amet consectetur. Vitae augue tortor at quisque est tempus enim. Aenean lorem vulputate aliquam suspendisse. Lacus orci gravida cras gravida nulla."
-    },
-    {
-        id: 4,
-        name: "Michael Brown",
-        content: "Aenean lorem vulputate aliquam suspendisse. Lorem ipsum dolor sit amet consectetur. Vitae augue tortor at quisque est tempus enim. Aliquam malesuada consequat turpis ut faucibus. Lacus orci gravida cras gravida nulla."
-    }
-]
+// const testimonials: Testimonial[] = [
+//     {
+//         id: 1,
+//         name: "Dave Santan",
+//         content: "Lorem ipsum dolor sit amet consectetur. Vitae augue tortor at quisque est tempus enim. Aliquam malesuada consequat turpis ut faucibus. Aenean lorem vulputate aliquam suspendisse. Lacus orci gravida cras gravida nulla."
+//     },
+//     {
+//         id: 2,
+//         name: "John Smith",
+//         content: "Vitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enim. Lorem ipsum dolor sit amet consectetur. Aliquam malesuada consequat turpis ut faucibus. Aenean lorem vulputate aliquam suspendisse. Lacus orci gravida cras gravida nulla."
+//     },
+//     {
+//         id: 3,
+//         name: "Emma Wilson",
+//         content: "Aliquam malesuada consequat turpis ut faucibus. Lorem ipsum dolor sit amet consectetur. Vitae augue tortor at quisque est tempus enim. Aenean lorem vulputate aliquam suspendisse. Lacus orci gravida cras gravida nulla."
+//     },
+//     {
+//         id: 4,
+//         name: "Michael Brown",
+//         content: "Aenean lorem vulputate aliquam suspendisse. Lorem ipsum dolor sit amet consectetur. Vitae augue tortor at quisque est tempus enim. Aliquam malesuada consequat turpis ut faucibus. Lacus orci gravida cras gravida nulla."
+//     }
+// ]
 
 export default function Testimonials() {
+
+    const {appInfo}= useAppInfo()
+
     const [currentIndex, setCurrentIndex] = useState(0)
 
     const next = () => {
         setCurrentIndex((prevIndex) =>
-            prevIndex === testimonials.length - 1 ? 0 : prevIndex + 1
+            prevIndex === (appInfo?.testimonials?.length || 1) - 1 ? 0 : prevIndex + 1 
         )
     }
 
     const prev = () => {
         setCurrentIndex((prevIndex) =>
-            prevIndex === 0 ? testimonials.length - 1 : prevIndex - 1
+            prevIndex === 0 ? (appInfo?.testimonials?.length || 1) - 1 : prevIndex - 1
         )
     }
 
@@ -97,10 +96,10 @@ export default function Testimonials() {
                                     className="min-h-[200px] flex flex-col items-center justify-center"
                                 >
                                     <h3 className="text-xl md:text-3xl lg:text-4xl font-sans mb-6">
-                                        {testimonials[currentIndex].name}
+                                        {appInfo?.testimonials[currentIndex].name}
                                     </h3>
                                     <p className="text-[#99999A] text-sm md:text-lg font-sans leading-loose mb-8 text-balance max-md:px-1.5">
-                                        {testimonials[currentIndex].content}
+                                        {appInfo?.testimonials[currentIndex].role}
                                     </p>
 
                                 </motion.div>
