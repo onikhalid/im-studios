@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { MoveLeft, MoveRight } from 'lucide-react'
-import { LinkButton } from "../ui"
+import { LinkButton, ShadowText } from "../ui"
 import { useAppInfo } from "@/contexts/info"
 
 
@@ -32,13 +32,13 @@ import { useAppInfo } from "@/contexts/info"
 
 export default function Testimonials() {
 
-    const {appInfo}= useAppInfo()
+    const { appInfo } = useAppInfo()
 
     const [currentIndex, setCurrentIndex] = useState(0)
 
     const next = () => {
         setCurrentIndex((prevIndex) =>
-            prevIndex === (appInfo?.testimonials?.length || 1) - 1 ? 0 : prevIndex + 1 
+            prevIndex === (appInfo?.testimonials?.length || 1) - 1 ? 0 : prevIndex + 1
         )
     }
 
@@ -52,15 +52,18 @@ export default function Testimonials() {
         <section className="flex flex-col justify-center bg-[#0E0E0E] text-white py-24 md:py-32 h-full">
             <div className="container mx-auto px-1.5 md:px-4">
                 <div className="flex flex-col items-center max-w-4xl mx-auto">
-                    <motion.h2
-                        className="text-5xl md:text-7xl font-bold mb-16 font-mono italic"
+                    {/* <motion.h2
+                        className="text-5xl md:text-7xl xl:text-8xl font-bold mb-16 font-heaters"
                         initial={{ opacity: 0.2, y: -50 }}
                         animate={{ opacity: 0.2, y: 0 }}
                         transition={{ duration: 0.5 }}
                     >
                         TESTIMONIALS
-                    </motion.h2>
+                    </motion.h2> */}
 
+                    <ShadowText
+                        text="TESTIMONIALS"
+                    />
                     <div className="relative w-full">
                         {/* Navigation */}
                         <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-10">

@@ -96,7 +96,7 @@ interface About {
   image: null;
 }
 
-interface Service {
+export interface Service {
   id: string;
   categories: (Category | Categories2)[];
   created_at: string;

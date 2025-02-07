@@ -3,7 +3,7 @@ import { Facebook, Instagram, Linkedin, Send, Twitter } from "lucide-react"
 
 export default function FooterSkeleton() {
   return (
-    <footer className="bg-black text-white py-16 animate-pulse">
+    <footer className="bg-black text-white py-16">
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center space-y-12">
           {/* Logo Skeleton */}

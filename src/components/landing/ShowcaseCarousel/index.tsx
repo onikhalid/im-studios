@@ -35,7 +35,7 @@ const carousels: Carousel[] = [
         image: '/images/caroImage3.png'
     },
 ]
-const Carousel = () => {
+const ShowcaseCarousel = () => {
 
     const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -52,63 +52,27 @@ const Carousel = () => {
     }
 
     return (
-        <main className="w-full">
-            <div>
-                <AnimatePresence mode="wait">
-                    <motion.div
-                        key={currentIndex}
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: -50 }}
-                        transition={{ duration: 0.5 }}
-                        className=""
-                    >
-                        <article className='grid lg:grid-cols-2 px-5'>
-                            <div className='flex flex-col justify-center items-center'>
-                                <h1 className="font-poppins font-semibold max-w-[600px] mb-6 !leading-[4rem] text-balance">
-                                    <BackgroundPerLine
-                                        text={carousels[currentIndex].title}
-                                    />
-                                </h1>
-                                <p className="text-[#99999A] text-sm md:text-lg font-sans leading-loose lg:mb-8 text-balance max-md:px-1.5 max-w-[600px]">
-                                    {carousels[currentIndex].description}
-                                </p>
-                                <div className='hidden lg:flex gap-10'>
-                                    <LinkButton variant="cta" size="cta" href="/book" className='text-base'>
-                                        Book a session
-                                    </LinkButton>
-                                    <div className="flex justify-between items-center gap-5 pointer-events-none z-10">
-                                        <motion.button
-                                            onClick={prev}
-                                            className="p-2 md:p-3 rounded-full border border-white/50 hover:bg-white/20 transition-colors pointer-events-auto"
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.9 }}
-                                            aria-label="Previous testimonial"
-                                        >
-                                            <MoveLeft className="w-4 md:w-6 h-4 md:h-6" />
-                                        </motion.button>
-                                        <motion.button
-                                            onClick={next}
-                                            className="p-2 md:p-3 rounded-full border border-white/50 hover:bg-white/20 transition-colors pointer-events-auto"
-                                            whileHover={{ scale: 1.1 }}
-                                            whileTap={{ scale: 0.9 }}
-                                            aria-label="Next testimonial"
-                                        >
-                                            <MoveRight className="w-4 md:w-6 h-4 md:h-6" />
-                                        </motion.button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='mt-5 lg:mt-10 w-full max-lg:aspect-video max-lg:overflow-hidden max-lg:max-h-[200px] max-w-[600px] flex max-lg:justify-center max-lg:items-center lg:justify-self-end lg:translate-y-[20%]'>
-                                <Image
-                                    src={carousels[currentIndex].image}
-                                    alt="image"
-                                    width={700}
-                                    height={700}
-                                    className='max-lg:object-cover'
+        <div className="w-full min-h-screen bg-[#0E0E0E] text-white">
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={currentIndex}
+                    initial={{ opacity: 0, x: 50 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -50 }}
+                    transition={{ duration: 0.5 }}
+                    className=""
+                >
+                    <article className='grid lg:grid-cols-2 px-5'>
+                        <div className='flex flex-col justify-center items-center'>
+                            <h1 className="font-poppins font-semibold max-w-[600px] mb-6 !leading-[4rem] text-balance">
+                                <BackgroundPerLine
+                                    text={carousels[currentIndex].title}
                                 />
-                            </div>
-                            <div className='flex lg:hidden gap-10 mt-5 max-w-[600px] w-full'>
+                            </h1>
+                            <p className="text-[#99999A] text-sm md:text-lg font-sans leading-loose lg:mb-8 text-balance max-md:px-1.5 max-w-[600px]">
+                                {carousels[currentIndex].description}
+                            </p>
+                            <div className='hidden lg:flex gap-10'>
                                 <LinkButton variant="cta" size="cta" href="/book" className='text-base'>
                                     Book a session
                                 </LinkButton>
@@ -133,13 +97,47 @@ const Carousel = () => {
                                     </motion.button>
                                 </div>
                             </div>
-                        </article>
+                        </div>
+                        <div className='mt-5 lg:mt-10 w-full max-lg:aspect-video max-lg:overflow-hidden max-lg:max-h-[200px] max-w-[600px] flex max-lg:justify-center max-lg:items-center lg:justify-self-end lg:translate-y-[20%]'>
+                            <Image
+                                src={carousels[currentIndex].image}
+                                alt="image"
+                                width={700}
+                                height={700}
+                                className='max-lg:object-cover'
+                            />
+                        </div>
+                        <div className='flex lg:hidden gap-10 mt-5 max-w-[600px] w-full'>
+                            <LinkButton variant="cta" size="cta" href="/book" className='text-base'>
+                                Book a session
+                            </LinkButton>
+                            <div className="flex justify-between items-center gap-5 pointer-events-none z-10">
+                                <motion.button
+                                    onClick={prev}
+                                    className="p-2 md:p-3 rounded-full border border-white/50 hover:bg-white/20 transition-colors pointer-events-auto"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    aria-label="Previous testimonial"
+                                >
+                                    <MoveLeft className="w-4 md:w-6 h-4 md:h-6" />
+                                </motion.button>
+                                <motion.button
+                                    onClick={next}
+                                    className="p-2 md:p-3 rounded-full border border-white/50 hover:bg-white/20 transition-colors pointer-events-auto"
+                                    whileHover={{ scale: 1.1 }}
+                                    whileTap={{ scale: 0.9 }}
+                                    aria-label="Next testimonial"
+                                >
+                                    <MoveRight className="w-4 md:w-6 h-4 md:h-6" />
+                                </motion.button>
+                            </div>
+                        </div>
+                    </article>
 
-                    </motion.div>
-                </AnimatePresence>
-            </div>
-        </main>
+                </motion.div>
+            </AnimatePresence>
+        </div>
     )
 }
 
-export default Carousel
+export default ShowcaseCarousel

@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
+import { Service } from "@/contexts/info"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
 
 interface ServiceCardProps {
-  service: any
+  service: Service;
   index: number
 }
 
@@ -18,17 +19,17 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
       transition={{ delay: index * 0.1 }}
       className="group relative overflow-hidden rounded-[2rem]"
     >
-      <Link href={service.link} className="block">
+      <Link href={service.service_type.toLowerCase()} className="block">
         <div className="relative flex items-center justify-center aspect-[5/3] overflow-hidden">
           <Image
-            src={service.image}
-            alt={service.title}
+            src={service.icon || "/images/landing/landing-service-mixing.png"}
+            alt={service.service_name}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-black/60" />
           <div className="z-[2] p-4 px-6  rounded-full bg-[#171717] flex items-center justify-center">
-            <h3 className="text-xl text-white font-light">{service.title}</h3>
+            <h3 className="text-xl text-white font-light">{service.service_name}</h3>
           </div>
         </div>
       </Link>
