@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ServiceCard } from "./ServiceCard"
 
-export const services = [
+const services = [
   {
     id: 1,
     title: "Rehearsals",
@@ -43,15 +43,14 @@ export const services = [
     link: "/services/duplications"
   },
 ]
-// Define the positions for each card slot
-const positions = [
-  { top: "20%", left: "0", transform: "translateY(0%)" }, // Top Left
-  { top: "0", left: "50%", transform: "translateX(-50%)" }, // Top Center
-  { top: "20%", right: "0", transform: "translateY(0%)" }, // Top Right
-  { bottom: "20%", right: "0", transform: "translateX(0)" }, // Bottom Right
-  { bottom: "0", left: "50%", transform: "translateX(-50%)" }, // Bottom Center
-  { bottom: "20%", left: "0", transform: "translateX(0)" }, // Bottom Left
-]
+
+const calculatePosition = (index: number, total: number) => {
+  const angle = (index / total) * 2 * Math.PI - Math.PI / 2
+  const radius = 350 // Adjust this value to change the size of the circle
+  const x = Math.cos(angle) * radius
+  const y = Math.sin(angle) * radius
+  return { x, y }
+}
 
 export function ServicesSection() {
   const [currentServices, setCurrentServices] = useState(services)
@@ -64,7 +63,7 @@ export function ServicesSection() {
         newServices.push(first || prev[0])
         return newServices
       })
-    }, 10000)
+    }, 1000)
 
     return () => clearInterval(interval)
   }, [])
@@ -72,7 +71,6 @@ export function ServicesSection() {
   return (
     <section className="relative bg-black py-20">
       <div className="w-[95vw] max-w-[1400px] mx-auto px-4">
-       
         {/* Services Layout */}
         <div className="relative">
           {/* Mobile Layout */}
@@ -84,13 +82,12 @@ export function ServicesSection() {
 
           {/* Desktop Circular Layout */}
           <div className="hidden md:flex md:items-center md:justify-center relative h-[900px] max-w-[1300px] mx-auto">
-
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-center mb-16 justify-self-center place-self-center"
+              className="text-center mb-16 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
             >
-              <h2 className="text-6xl font-bold text-white mb-8 ">
+              <h2 className="text-6xl font-bold text-white mb-8">
                 OUR SERVICES
               </h2>
               <Button
@@ -102,25 +99,32 @@ export function ServicesSection() {
             </motion.div>
 
             <AnimatePresence>
-              {
-                currentServices.map((service, index) => (
+              {currentServices.map((service, index) => {
+                const { x, y } = calculatePosition(index, currentServices.length)
+                return (
                   <motion.div
                     key={service.id}
                     layout
                     layoutId={service.id.toString()}
-                    style={{...positions[index]}}
-                   
+                    style={{
+                      position: 'absolute',
+                      left: '50%',
+                      top: '50%',
+                      x,
+                      y,
+                    }}
                     transition={{
                       type: "spring",
                       stiffness: 200,
                       damping: 30,
                       mass: 1,
                     }}
-                    className="absolute w-[380px]"
+                    className="w-[380px] transform -translate-x-1/2 -translate-y-1/2"
                   >
                     <ServiceCard service={service} index={index} />
                   </motion.div>
-                ))}
+                )
+              })}
             </AnimatePresence>
           </div>
         </div>

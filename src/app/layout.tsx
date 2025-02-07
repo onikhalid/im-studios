@@ -4,6 +4,7 @@ import { Poppins, DM_Mono, DM_Sans } from 'next/font/google'
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { AppHeader } from "@/components/landing";
+import AllProviders from "@/contexts/AllProviders";
 
 
 const FPoppins = Poppins({
@@ -40,8 +41,10 @@ export default function RootLayout({
       <body
         className={cn(FPoppins.className, FDM_Mono.variable, FDM_Sans.variable, "relative")}
       >
-        <AppHeader/>
-        {children}
+        <AllProviders>
+          <AppHeader />
+          {children}
+        </AllProviders>
       </body>
     </html>
   );
