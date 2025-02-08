@@ -12,12 +12,12 @@ export default function AppHeader() {
             href: "/"
         },
         {
-            name: "Services",
-            href: "/services"
-        },
-        {
             name: "About us",
             href: "#about"
+        },
+        {
+            name: "Services",
+            href: "/services"
         },
         {
             name: "Contact us",

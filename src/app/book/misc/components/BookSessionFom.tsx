@@ -30,7 +30,6 @@ export function BookingForm() {
             first_name: "",
             last_name: "",
             email: "",
-            phone: "",
             bookings: [],
         },
     })
@@ -130,7 +129,7 @@ export function BookingForm() {
                         <span className="md:hidden ml-2">A</span>
                     </h1>
                     <h1 className="text-[7rem] xl:text-[10rem] leading-none font-bebas text-white -translate-y-[30%] lg:-translate-y-[50%]">
-                        <span className="ml-2 max-md:hidden">A
+                        <span className="mX-4 max-md:hidden">A
                         </span>
                         SESSION</h1>
                 </div>
@@ -188,7 +187,7 @@ export function BookingForm() {
                                 )}
                             />
 
-                            <FormField
+                            {/* <FormField
                                 control={form.control}
                                 name="phone"
                                 render={({ field }) => (
@@ -205,10 +204,10 @@ export function BookingForm() {
                                         <FormMessage />
                                     </FormItem>
                                 )}
-                            />
+                            /> */}
 
                             <div className="space-y-4">
-                                <FormLabel>Which of our services would you like to book for?</FormLabel>
+                                <FormLabel>Which of our services would you like to book?</FormLabel>
                                 <Select onValueChange={handleServiceSelect} value={selectedServiceId || undefined}>
                                     <SelectTrigger className="border-gray-700 h-12">
                                         <SelectValue placeholder="Select service" className="text-white" />

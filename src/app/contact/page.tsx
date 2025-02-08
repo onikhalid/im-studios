@@ -40,25 +40,25 @@ export default function Contact() {
             platform: "Twitter",
             handle: "@IMStudioz",
             link: appInfo?.footer.x_link || '#',
-            icon: <Twitter className="w-5 h-5" />,
+            icon: <Twitter className="w-7 h-7" />,
         },
         {
             platform: "Instagram",
             handle: appInfo?.footer.instagram_link || "@IMStudioz",
             link: "https://instagram.com/IMStudioz",
-            icon: <Instagram className="w-5 h-5" />,
+            icon: <Instagram className="w-7 h-7" />,
         },
         {
             platform: "Facebook",
             handle: appInfo?.footer.facebook_link || "@IMStudioz",
             link: "https://facebook.com/IMStudioz",
-            icon: <Facebook className="w-5 h-5" />,
+            icon: <Facebook className="w-7 h-7" />,
         },
         {
             platform: "LinkedIn",
             handle: appInfo?.footer.x_link || "@IMStudioz",
             link: "https://linkedin.com/in/IMStudioz",
-            icon: <Linkedin className="w-5 h-5" />,
+            icon: <Linkedin className="w-7 h-7" />,
         },
     ];
 
@@ -86,7 +86,7 @@ export default function Contact() {
 
                     <div className="mt-8 space-y-2">
                         <p className="text-sm font-semibold">Socials</p>
-                        <div className="grid lg:grid-cols-2 justify-center text-center gap-4">
+                        <div className="flex items-center text-center gap-4">
                             {socials.map((social, index) => (
                                 <a
                                     key={index}
@@ -95,13 +95,9 @@ export default function Contact() {
                                     rel="noopener noreferrer"
                                     className="flex items-center gap-2 hover:text-gray-400"
                                 >
-                                    <span className="bg-[#212121] rounded-full p-1.5">
+                                    <span className="bg-[#212121] rounded-full p-2.5">
                                         {social.icon}
-                                    </span>
-                                    <span className="text-[#FFFFFFB2]">
-
-                                        {social.handle}
-                                    </span>
+                                    </span>  
                                 </a>
                             ))}
                         </div>
