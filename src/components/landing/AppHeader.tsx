@@ -21,7 +21,7 @@ export default function AppHeader() {
         },
         {
             name: "Contact us",
-            href: "#contact"
+            href: "/contact"
         }
     ]
 

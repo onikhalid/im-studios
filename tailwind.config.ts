@@ -56,7 +56,9 @@ export default {
   			mono: ["var(--font-mono)", "mono"],
   			archivo: ["var(--font-archivo)", "sans"],
   			sans: ["var(--font-sans)", "sans"],
-  			heaters: ["var(--font-heaters)", "sans"]
+  			heaters: ["var(--font-heaters)", "script"],
+  			bebas: ["var(--font-bebas)", "sans"],
+  			"dm-sans": ["var(--font-dm-sans)", "sans"]
   		},
   		animation: {
   			marquee: 'marquee 25s linear infinite',
