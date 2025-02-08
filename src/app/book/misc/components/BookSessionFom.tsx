@@ -9,7 +9,7 @@ import { CalendarIcon, X } from "lucide-react"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
-import { Badge } from "@/components/ui/badge"
+// import { Badge } from "@/components/ui/badge"
 import { bookingFormSchema, type BookingFormValues, type SelectedService } from "../lib/schema"
 import { type Categories2, type Category, useAppInfo } from "@/contexts/info"
 import { DatePickerDialog } from "./DatePickerDialog"
@@ -227,7 +227,7 @@ export function BookingForm() {
                                         {appInfo?.services
                                             ?.find((s) => s.id === selectedServiceId)
                                             ?.categories.map((category) => {
-                                                const isSelected = selectedServices.some((s) => s.categoryId === category.id)
+                                                // const isSelected = selectedServices.some((s) => s.categoryId === category.id)
                                                 return (
                                                     <button
                                                         key={category.id}
