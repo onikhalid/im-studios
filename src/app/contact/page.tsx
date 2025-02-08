@@ -69,11 +69,11 @@ export default function Contact() {
                 initial={{ opacity: 0, x: 50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative flex flex-col lg:grid grid-cols-2 justify-center items-center mx-auto min-h-screen space-y-8 p-20 gap-20 image-background"
+                className="relative flex flex-col lg:grid grid-cols-2 justify-center items-center mx-auto min-h-screen space-y-8 p-4 md:p-10  xl:p-20 !pt-20 md:pt-20 gap-20 image-background"
             >
                 <div className="self-center">
                     <h1 className="text-5xl font-bold mt-7 font-bebas xl:text-[9rem] tracking-tight">CONTACT US</h1>
-                    <div className="flex flex-row gap-7 mt-4">
+                    <div className="flex max-md:flex-col gap-7 mt-4">
                         <Link href={`tel:${appInfo?.footer.contact_phone_number || ""}`} className="text-lg flex flex-row gap-3 items-center">
                             <PhoneCall className="bg-[#212121] rounded-full p-1.5 w-8 h-8" />
                             <span>{appInfo?.footer.contact_phone_number || "+123-456-7890"}</span>
@@ -86,7 +86,7 @@ export default function Contact() {
 
                     <div className="mt-8 space-y-2">
                         <p className="text-sm font-semibold">Socials</p>
-                        <div className="grid grid-cols-2 justify-center text-center gap-4">
+                        <div className="grid lg:grid-cols-2 justify-center text-center gap-4">
                             {socials.map((social, index) => (
                                 <a
                                     key={index}

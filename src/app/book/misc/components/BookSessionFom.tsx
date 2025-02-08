@@ -13,6 +13,9 @@ import { Badge } from "@/components/ui/badge"
 import { bookingFormSchema, type BookingFormValues, type SelectedService } from "../lib/schema"
 import { type Categories2, type Category, useAppInfo } from "@/contexts/info"
 import { DatePickerDialog } from "./DatePickerDialog"
+import { convertKebabAndSnakeToTitleCase } from "@/utils/strings"
+import { useMakeBooking } from "../api/postMakeBooking"
+import Spinner from "@/components/ui/spinner"
 // import { ServiceSelector } from "./ServiceSelector"
 
 export function BookingForm() {
@@ -31,6 +34,8 @@ export function BookingForm() {
             bookings: [],
         },
     })
+    const { formState: { errors } } = form
+    console.log(errors)
 
     const handleServiceSelect = (serviceId: string) => {
         setSelectedServiceId(serviceId)
@@ -68,7 +73,7 @@ export function BookingForm() {
     const handleDateSelect = (serviceId: string, date: Date, time: string) => {
         setSelectedServices((prev) =>
             prev.map((service) =>
-                service.categoryId === serviceId ? { ...service, date: format(date, "yyyy-MM-dd"), time } : service,
+                service.categoryId === serviceId ? { ...service, date: format(new Date(date) || new Date(), "yyyy-MM-dd"), time } : service,
             ),
         )
         updateFormBookings()
@@ -86,6 +91,21 @@ export function BookingForm() {
 
     const totalCost = selectedServices.reduce((acc, service) => acc + Number.parseFloat(service.cost), 0)
 
+
+    const { mutate: makeBooking, isPending } = useMakeBooking()
+
+    // async function onSubmit(data: BookingFormValues) {
+    //   const payload = {
+    //     ...data,
+    //     bookings: selectedServices
+    //       .filter((service) => service.date)
+    //       .map((service) => ({
+    //         service_category: service.categoryId,
+    //         book_date: service.date,
+    //       })),
+    //   }
+    //   makeBooking(payload)
+    // }
     async function onSubmit(data: BookingFormValues) {
         const payload = {
             ...data,
@@ -93,26 +113,34 @@ export function BookingForm() {
                 .filter((service) => service.date)
                 .map((service) => ({
                     service_category: service.categoryId,
-                    book_date: service.date,
+                    book_date: format(new Date(service.date || new Date()), "yyyy-MM-dd"),
                 })),
         }
         console.log(payload)
+        makeBooking(payload)
+
     }
 
     return (
         <div className="bg-[#0E0E0E]  ">
-            <div className="w-full mx-auto grid lg:grid-cols-2 items-center gap-12 p-6 pr-0 xl:p-20 xl:pr-0 min-h-screen">
+            <div className="w-full mx-auto grid lg:grid-cols-2 items-center gap-12 p-6 xl:p-20 xl:pr-0 min-h-screen">
                 <div className="pt-12 leading-tight">
-                    <h1 className="text-[15rem] leading-none font-bebas text-[#FFFFFF21]">BOOK</h1>
-                    <h1 className="text-[10rem] leading-none font-bebas text-white -translate-y-[50%]">A SESSION</h1>
+                    <h1 className="text-[7rem] xl:text-[15rem] leading-none font-bebas text-[#FFFFFF21]">BOOK
+
+                        <span className="md:hidden ml-2">A</span>
+                    </h1>
+                    <h1 className="text-[7rem] xl:text-[10rem] leading-none font-bebas text-white -translate-y-[30%] lg:-translate-y-[50%]">
+                        <span className="ml-2 max-md:hidden">A
+                        </span>
+                        SESSION</h1>
                 </div>
 
-                <div className="space-y-8 bg-[#141414] p-8 xl:p-12 rounded-l-2xl">
+                <div className="space-y-8 bg-[#141414] md:p-8 xl:p-12 rounded-l-2xl">
                     <p className="text-xl text-gray-400">Provide details below to book a session today</p>
 
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                            <div className="grid grid-cols-2 gap-4">
+                            <div className="grid md:grid-cols-2 gap-4 gap-y-6">
                                 <FormField
                                     control={form.control}
                                     name="first_name"
@@ -120,7 +148,7 @@ export function BookingForm() {
                                         <FormItem>
                                             <FormLabel>First name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Enter first name" {...field} className="bg-gray-800 border-gray-700" />
+                                                <Input placeholder="Enter first name" {...field} className="border-gray-700" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -133,7 +161,7 @@ export function BookingForm() {
                                         <FormItem>
                                             <FormLabel>Last name</FormLabel>
                                             <FormControl>
-                                                <Input placeholder="Enter last name" {...field} className="bg-gray-800 border-gray-700" />
+                                                <Input placeholder="Enter last name" {...field} className="border-gray-700" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -152,7 +180,7 @@ export function BookingForm() {
                                                 placeholder="Enter email address"
                                                 type="email"
                                                 {...field}
-                                                className="bg-gray-800 border-gray-700"
+                                                className="border-gray-700"
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -171,7 +199,7 @@ export function BookingForm() {
                                                 placeholder="Enter phone number"
                                                 type="tel"
                                                 {...field}
-                                                className="bg-gray-800 border-gray-700"
+                                                className="border-gray-700"
                                             />
                                         </FormControl>
                                         <FormMessage />
@@ -182,8 +210,8 @@ export function BookingForm() {
                             <div className="space-y-4">
                                 <FormLabel>Which of our services would you like to book for?</FormLabel>
                                 <Select onValueChange={handleServiceSelect} value={selectedServiceId || undefined}>
-                                    <SelectTrigger className="bg-gray-800 border-gray-700">
-                                        <SelectValue placeholder="Select service" />
+                                    <SelectTrigger className="border-gray-700 h-12">
+                                        <SelectValue placeholder="Select service" className="text-white" />
                                     </SelectTrigger>
                                     <SelectContent>
                                         {appInfo?.services?.map((service) => (
@@ -195,25 +223,30 @@ export function BookingForm() {
                                 </Select>
 
                                 {selectedServiceId && (
-                                    <div className="space-y-2">
+                                    <div className="flex flex-col gap-4 bg-[#161616] p-2 rounded-xl border border-[#484848] divide-y">
                                         {appInfo?.services
                                             ?.find((s) => s.id === selectedServiceId)
                                             ?.categories.map((category) => {
                                                 const isSelected = selectedServices.some((s) => s.categoryId === category.id)
                                                 return (
-                                                    <Button
+                                                    <button
                                                         key={category.id}
                                                         type="button"
-                                                        variant={isSelected ? "default" : "outline"}
-                                                        className="w-full justify-between h-auto py-4"
+                                                        // variant={isSelected ? "default" : "outline"}
+                                                        className="h-auto"
                                                         onClick={() => handleCategorySelect(category)}
                                                     >
-                                                        <div className="flex flex-col items-start">
-                                                            <span>{category.category_name}</span>
-                                                            <span className="text-sm text-muted-foreground">{category.category_description}</span>
+                                                        <div className="flex flex-col items-start text-left text-[#D8D8DF]">
+                                                            <span>{convertKebabAndSnakeToTitleCase(category.category_name)}</span>
+                                                            <p className="text-xs text-muted-foreground">
+                                                                {category.category_description}
+
+                                                                <span className="block">
+                                                                    £{category.category_cost}
+                                                                </span>
+                                                            </p>
                                                         </div>
-                                                        <Badge variant={isSelected ? "secondary" : "outline"}>£{category.category_cost}</Badge>
-                                                    </Button>
+                                                    </button>
                                                 )
                                             })}
                                     </div>
@@ -223,7 +256,7 @@ export function BookingForm() {
                             {selectedServices.length > 0 && (
                                 <div className="space-y-2">
                                     {selectedServices.map((service) => (
-                                        <div key={service.categoryId} className="flex items-center gap-4 p-3 bg-gray-800/50 rounded-lg">
+                                        <div key={service.categoryId} className="flex items-center gap-4 p-3 50 rounded-lg">
                                             <div className="flex-1">
                                                 <h4 className="font-medium">{service.categoryName}</h4>
                                                 <p className="text-sm text-gray-400">Cost: £{service.cost}</p>
@@ -272,6 +305,9 @@ export function BookingForm() {
                                 disabled={selectedServices.length === 0 || selectedServices.some((s) => !s.date)}
                             >
                                 Proceed - £{totalCost.toFixed(2)}
+                                {
+                                    isPending && <Spinner size={18} />
+                                }
                             </Button>
 
                             {selectedServices.length > 0 && (

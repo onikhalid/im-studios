@@ -19,7 +19,7 @@ export default function Footer() {
         <div className="flex flex-col items-center space-y-12">
           {/* Logo */}
           <Link
-            target="_blank" href="/" className="text-4xl md:text-5xl font-mono">
+            href="/" className="text-4xl md:text-5xl font-mono">
             IM STUDIOZ
           </Link>
 

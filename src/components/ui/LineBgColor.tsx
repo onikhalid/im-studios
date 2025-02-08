@@ -15,7 +15,7 @@ export default function BackgroundPerLine({
     text,
     backgroundColor = 'bg-[#1C1C1C]',
     textColor = 'text-white',
-    padding = 'px-2 py-4',
+    padding = ' p-2 md:py-4',
     fontSize = 'text-xl md:text-3xl lg:text-[3.125rem] xl:text-[3.25rem]',
     lineHeight = 'leading-relaxed'
 }: BackgroundPerLineProps) {
@@ -68,7 +68,7 @@ export default function BackgroundPerLine({
     return (
         <div
             ref={containerRef}
-            className={`inline-bloc !max-w-[35ch] ${fontSize} ${lineHeight} ${textColor}`}
+            className={`inline-bloc max-md:!max-w-[40ch] !max-w-[35ch] ${fontSize} ${lineHeight} ${textColor}`}
             // style={{ maxWidth: '100%' }}
         >
             {lines.map((line, index) => (

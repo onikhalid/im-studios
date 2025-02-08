@@ -4,23 +4,18 @@ import React from 'react';
 
 const LandingPage = () => {
   return (
-    <main className="h-screen snap-y snap-normal overflow-y-scroll">
+    <main className="h-screen  overflow-y-scroll">
   
 
       <Hero />
 
-      <section className="h-screen flex flex-col">
+      <section className="lg:h-screen flex flex-col">
         <ServicesSection />
       </section>
 
-      {/* <section className="md:h-screen bg-[#0E0E0E] text-white flex items-center justify-center">
-        <h2 className="text-4xl">Section 1</h2>
-      </section> */}
-
+    
       <ShowcaseCarousel/>
-
       <FAQ />
-
 
       <section className="md:h-screen flex flex-col">
         <Testimonials />
