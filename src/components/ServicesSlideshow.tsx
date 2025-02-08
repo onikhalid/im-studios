@@ -1,8 +1,7 @@
 "use client"
 
 import React, { useRef, useState, useEffect } from "react"
-import { motion, useScroll, useTransform } from "framer-motion"
-import { Button } from "@/components/ui/button"
+import { motion, MotionValue, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 import { type Service, useAppInfo } from "@/contexts/info"
 import ServicesSlideShowSkeleton from "./ServicesSlideshowSkeleton"
@@ -73,8 +72,8 @@ export default function ServicesSlideshow() {
         <>
             <div>
                 {
-                    services.map((service) => (
-                        <div className="lg:hidden">
+                    services.map((service, index) => (
+                        <div className="lg:hidden" key={index}>
                             <div className="group relative overflow-hidden rounded-[2rem]">
                                 <div className="block">
                                     <div className="relative flex items-center justify-center aspect-[5/3] overflow-hidden">
@@ -141,7 +140,7 @@ function ServiceImage({
     service: Service
     index: number
     totalServices: number
-    scrollYProgress: any
+    scrollYProgress: MotionValue<number>
     isVisible: boolean
 }) {
     const imageX = useTransform(scrollYProgress, [index / totalServices, (index + 1) / totalServices], ["0%", "-100%"])
@@ -180,7 +179,7 @@ function ServiceContent({
     service: Service
     index: number
     totalServices: number
-    scrollYProgress: any
+    scrollYProgress: MotionValue<number>
     isVisible: boolean
 }) {
     const contentY = useTransform(scrollYProgress, [index / totalServices, (index + 1) / totalServices], ["0%", "-100%"])

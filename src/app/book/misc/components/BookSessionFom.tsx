@@ -13,7 +13,7 @@ import { Badge } from "@/components/ui/badge"
 import { bookingFormSchema, type BookingFormValues, type SelectedService } from "../lib/schema"
 import { type Categories2, type Category, useAppInfo } from "@/contexts/info"
 import { DatePickerDialog } from "./DatePickerDialog"
-import { ServiceSelector } from "./ServiceSelector"
+// import { ServiceSelector } from "./ServiceSelector"
 
 export function BookingForm() {
     const { appInfo } = useAppInfo()

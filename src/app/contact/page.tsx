@@ -1,16 +1,18 @@
 "use client";
 
-import { Footer } from "@/components/landing";
-import { motion } from "framer-motion";
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { Facebook, Instagram, Linkedin, Mail, PhoneCall, Send, Twitter } from 'lucide-react'
-import { useAppInfo } from "@/contexts/info";
+import { Facebook, Instagram, Linkedin, Mail, PhoneCall, Twitter } from 'lucide-react'
 import Link from "next/link";
 import Image from "next/image";
 
+import { useAppInfo } from "@/contexts/info";
+import { Footer } from "@/components/landing";
+
+
 export default function Contact() {
-    const { appInfo, isFetchingAppInfo } = useAppInfo()
+    const { appInfo } = useAppInfo()
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
