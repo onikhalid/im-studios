@@ -1,4 +1,4 @@
-import * as z from "zod"
+import { z } from "zod"
 
 export const bookingFormSchema = z.object({
   first_name: z.string().min(2, "First name must be at least 2 characters"),
@@ -9,6 +9,7 @@ export const bookingFormSchema = z.object({
       z.object({
         service_category: z.string(),
         book_date: z.string(),
+        book_time: z.string().optional(),
       }),
     )
     .min(1, "Please select at least one service"),
@@ -16,13 +17,13 @@ export const bookingFormSchema = z.object({
 
 export type BookingFormValues = z.infer<typeof bookingFormSchema>
 
-export type SelectedService = {
+export interface SelectedService {
   serviceId: string
   serviceName: string
   categoryId: string
   categoryName: string
   cost: string
-  hours: number | null
+  hours: number
   date?: string
   time?: string
 }

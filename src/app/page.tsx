@@ -5,25 +5,12 @@ import React from 'react';
 const LandingPage = () => {
   return (
     <main className="h-screen  overflow-y-scroll">
-  
-
       <Hero />
-
-      <section className="lg:h-screen flex flex-col">
-        <ServicesSection />
-      </section>
-
-    
-      <ShowcaseCarousel/>
+      <ServicesSection />
+      <ShowcaseCarousel />
       <FAQ />
-
-      <section className="md:h-screen flex flex-col">
-        <Testimonials />
-      </section>
-      
-      <section className=" flex flex-col">
-        <Footer />
-      </section>
+      <Testimonials />
+      <Footer />
     </main>
   );
 };

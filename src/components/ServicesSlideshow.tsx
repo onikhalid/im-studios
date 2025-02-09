@@ -1,48 +1,32 @@
 "use client"
 
-import React, { useRef, useState, useEffect } from "react"
-import { motion, MotionValue, useScroll, useTransform } from "framer-motion"
+import { useRef, useState, useEffect, useMemo } from "react"
+import { motion, type MotionValue, useScroll, useTransform } from "framer-motion"
 import Image from "next/image"
 import { type Service, useAppInfo } from "@/contexts/info"
 import ServicesSlideShowSkeleton from "./ServicesSlideshowSkeleton"
 import { LinkButton } from "./ui"
 import { convertKebabAndSnakeToTitleCase } from "@/utils/strings"
+import { useSearchParams } from "next/navigation"
 
-const filler_service = [
-    {
-        id: "0",
-        created_at: "2024-02-08",
-        categories: [],
-        updated_at: "2024-02-08",
-        service_name: "Mixing",
-        service_type: "audio",
-        service_description:
-            "Our mixing service involves balancing individual tracks—vocals, instruments, and more—to create a polished, cohesive sound. We apply EQ, compression, reverb, and panning adjustments to ensure your track is professionally crafted.",
-        icon: "/images/services4.png",
-        equipment: null,
-    },
+
+export const services_images = [
+    "/images/services1.png",
+    "/images/services2.png",
+    "/images/services3.png",
+    "/images/services4.png",
+    "/images/services5.png",
+    "/images/services6.png",
+    "/images/services7.png",
 ]
 
 export default function ServicesSlideshow() {
     const { appInfo, isFetchingAppInfo } = useAppInfo()
     const [isVisible, setIsVisible] = useState(false)
 
-    const services = appInfo?.services || [
-        {
-            id: "1",
-            created_at: "2024-02-08",
-            categories: [],
-            updated_at: "2024-02-08",
-            service_name: "Mixing",
-            service_type: "audio",
-            service_description:
-                "Our mixing service involves balancing individual tracks—vocals, instruments, and more—to create a polished, cohesive sound. We apply EQ, compression, reverb, and panning adjustments to ensure your track is professionally crafted.",
-            icon: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-8YM6Ip7C5OyZkzU2QcUtso016vbaCx.png",
-            equipment: null,
-        },
-    ]
+    const services = useMemo(() => appInfo?.services || ([] as Service[]), [appInfo])
 
-    const allServices = [...filler_service, ...services]
+    const allServices = useRef(services)
 
     const containerRef = useRef<HTMLDivElement>(null)
     const { scrollYProgress } = useScroll({
@@ -64,6 +48,25 @@ export default function ServicesSlideshow() {
         return () => window.removeEventListener("scroll", handleScroll)
     }, [])
 
+    const searchParams = useSearchParams()
+    const initialScrollDone = useRef(false)
+
+    useEffect(() => {
+        const s = searchParams.get("s")
+        if (s && !initialScrollDone.current) {
+            const serviceIndex = allServices.current.findIndex((service) => service.service_type === s)
+            if (serviceIndex !== -1 && containerRef.current) {
+                const targetScroll = (serviceIndex / allServices.current.length) * containerRef.current.scrollHeight
+                containerRef.current.scrollTo({ top: targetScroll, behavior: "smooth" })
+                initialScrollDone.current = true
+            }
+        }
+    }, [searchParams])
+
+    useEffect(() => {
+        allServices.current = [...services]
+    }, [services])
+
     if (isFetchingAppInfo) {
         return <ServicesSlideShowSkeleton />
     }
@@ -71,58 +74,56 @@ export default function ServicesSlideshow() {
     return (
         <>
             <div>
-                {
-                    services.map((service, index) => (
-                        <div className="lg:hidden" key={index}>
-                            <div className="group relative overflow-hidden rounded-[2rem]">
-                                <div className="block">
-                                    <div className="relative flex items-center justify-center aspect-[5/3] overflow-hidden">
-                                        <Image
-                                            src={service.icon || "/images/landing/landing-service-mixing.png"}
-                                            alt={service.service_name}
-                                            fill
-                                            className="object-cover transition-transform duration-300 group-hover:scale-110"
-                                        />
-                                        <div className="absolute inset-0 bg-black/60" />
-                                        <div className="z-[2] p-4 px-6  rounded-full bg-[#171717] flex items-center justify-center">
-                                            <h3 className="text-xl text-white font-light">{service.service_name}</h3>
-                                        </div>
+                {services.map((service, index) => (
+                    <div className="lg:hidden" key={index}>
+                        <div className="group relative overflow-hidden rounded-[2rem]">
+                            <div className="block">
+                                <div className="relative flex items-center justify-center aspect-[5/3] overflow-hidden">
+                                    <Image
+                                        src={service.icon || "/images/landing/landing-service-mixing.png"}
+                                        alt={service.service_name}
+                                        fill
+                                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                                    />
+                                    <div className="absolute inset-0 bg-black/60" />
+                                    <div className="z-[2] p-4 px-6  rounded-full bg-[#171717] flex items-center justify-center">
+                                        <h3 className="text-xl text-white font-light">{service.service_name}</h3>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    ))
-                }
+                    </div>
+                ))}
             </div>
 
             <div ref={containerRef} className="relative max-lg:hidden">
                 <div className="sticky top-0 h-screen flex overflow-hidden">
-                    <div className="w-1/2 relative">
-                        {allServices.map((service, index) => (
+                    <div className="w-1/2 relative overflow-x-hidden">
+                        {allServices.current.map((service, index) => (
                             <ServiceImage
                                 key={service.id}
                                 service={service}
                                 index={index}
-                                totalServices={allServices.length}
+                                totalServices={allServices.current.length}
                                 scrollYProgress={scrollYProgress}
                                 isVisible={isVisible}
                             />
                         ))}
                     </div>
                     <div className="relative w-1/2 bg-black/90">
-                        {allServices.map((service, index) => (
+                        {allServices.current.map((service, index) => (
                             <ServiceContent
                                 key={service.id}
                                 service={service}
                                 index={index}
-                                totalServices={allServices.length}
+                                totalServices={allServices.current.length}
                                 scrollYProgress={scrollYProgress}
                                 isVisible={isVisible}
                             />
                         ))}
                     </div>
                 </div>
-                {allServices.map((service) => (
+                {allServices.current.map((service) => (
                     <div key={service.id} className="h-screen z-[-2]" />
                 ))}
             </div>
@@ -143,23 +144,48 @@ function ServiceImage({
     scrollYProgress: MotionValue<number>
     isVisible: boolean
 }) {
-    const imageX = useTransform(scrollYProgress, [index / totalServices, (index + 1) / totalServices], ["0%", "-100%"])
+    const imageX = useTransform(scrollYProgress, [index / totalServices, (index + 1) / totalServices], ["100%", "-100%"])
+
+    const start = index / totalServices
+    const end = (index + 1) / totalServices
+
     const opacity = useTransform(
         scrollYProgress,
-        [(index - 0.5) / totalServices, index / totalServices, (index + 0.5) / totalServices],
-        [0, 1, 0],
+        [
+            start, 
+            start + 0.1, 
+            end - 0.1, 
+            end,
+        ],
+        [0.4, 1, 1, 0.4],
     )
+
+    const zIndex = useTransform(
+        scrollYProgress,
+        [
+            start, 
+            start + 0.1, 
+            end - 0.1, 
+            end,
+        ],
+        [totalServices - index, 10 + index, 10 + index, totalServices - index],
+    )
+    //   const opacity = useTransform(
+    //     scrollYProgress,
+    //     [(index - 0.5) / totalServices, index / totalServices, (index + 0.5) / totalServices],
+    //     [0, 1, 0],
+    //   )
 
     return (
         <motion.div
-            style={{ x: imageX, opacity }}
-            className="absolute inset-0 bg-black/90"
+            style={{ x: imageX, opacity, zIndex }}
+            className="absolute inset-0 bg-black/90 overflow-x-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: isVisible ? 1 : 0 }}
             transition={{ duration: 0.5 }}
         >
             <Image
-                src={service.icon || "/images/services3.png"}
+                src={service.icon || services_images[index] || "/images/services3.png"}
                 alt={service.service_name}
                 fill
                 className="object-cover"
@@ -182,24 +208,32 @@ function ServiceContent({
     scrollYProgress: MotionValue<number>
     isVisible: boolean
 }) {
-    const contentY = useTransform(scrollYProgress, [index / totalServices, (index + 1) / totalServices], ["0%", "-100%"])
+    const start = index / totalServices
+    const end = (index + 1) / totalServices
+
+    const contentY = useTransform(scrollYProgress, [start, end], ["100%", "-100%"])
 
     const opacity = useTransform(
         scrollYProgress,
-        [(index - 0.3) / totalServices,
-        index / totalServices,
-        index / totalServices,
-        index / totalServices,
-        (index + 0.3) / totalServices],
-        [0, 1, 1, 1, 0],
+        [
+            start, 
+            start + 0.1, 
+            end - 0.1, 
+            end,
+        ],
+        [0.2, 1, 1, 0.2],
     )
+
     const zIndex = useTransform(
         scrollYProgress,
-        [(index - 0.3) / totalServices, index / totalServices, (index + 0.3) / totalServices],
-        [1, 5, 1],
+        [
+            start, 
+            start + 0.1, 
+            end - 0.1, 
+            end,
+        ],
+        [1, 5, 5, 1],
     )
-
-
 
     return (
         <motion.div
@@ -211,36 +245,28 @@ function ServiceContent({
         >
             <div className="flex flex-col items-start justify-center text-white text-left w-[calc(100%-6rem)] max-w-[580px] mx-auto h-full">
                 <div className="absolute flex items-end top-[100px] right-[1.5rem] text-xl mb-2 text-right text-white/60 font-dm-sans">
-                    <span className="text-6xl font-bold text-white/20">
-                        {String(index).padStart(2, "0")}
-                    </span>
-                    /{String(totalServices - 1).padStart(2, "0")}
+                    <span className="text-6xl font-bold text-white/20">{String(index + 1).padStart(2, "0")}</span>/
+                    {String(totalServices).padStart(2, "0")}
                 </div>
 
                 {/* <div className="text-sm tracking-wider mb-4">{service.categories.map((cat) => cat.toString()).join(" | ")}</div> */}
 
-                <h2 className="text-5xl xl:text-6xl font-semibold mb-6">{service.service_name}</h2>
+                <h2 className="text-5xl xl:text-6xl font-semibold mb-6">{convertKebabAndSnakeToTitleCase(service.service_name)}</h2>
 
                 <section>
                     {service.service_description && <p className="text-lg mb-8 text-gray-300">{service.service_description}</p>}
 
                     <div className="">
-                        {
-                            service.categories?.map((category, index) => (
-                                <div key={index} className="text-sm text-white mb-5 ">
-                                    <h5 className="">
-                                        {convertKebabAndSnakeToTitleCase(category.category_name)}
-                                    </h5>
-                                    <p className="text-sm text-[#99999A]">
-                                        {category.category_description}
-                                    </p>
-                                </div>
-                            ))
-                        }
+                        {service.categories?.map((category, index) => (
+                            <div key={index} className="text-sm text-white mb-5 ">
+                                <h5 className="">{convertKebabAndSnakeToTitleCase(category.category_name)}</h5>
+                                <p className="text-sm text-[#99999A]">{category.category_description}</p>
+                            </div>
+                        ))}
                     </div>
                 </section>
 
-                <LinkButton className="" variant="cta" size="cta" href="/book">
+                <LinkButton className="" variant="cta" size="cta" href={`/book?service=${service.id}`}>
                     Book a session
                 </LinkButton>
             </div>

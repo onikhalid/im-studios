@@ -7,28 +7,6 @@ import { LinkButton, ShadowText } from "../ui"
 import { useAppInfo } from "@/contexts/info"
 
 
-// const testimonials: Testimonial[] = [
-//     {
-//         id: 1,
-//         name: "Dave Santan",
-//         content: "Lorem ipsum dolor sit amet consectetur. Vitae augue tortor at quisque est tempus enim. Aliquam malesuada consequat turpis ut faucibus. Aenean lorem vulputate aliquam suspendisse. Lacus orci gravida cras gravida nulla."
-//     },
-//     {
-//         id: 2,
-//         name: "John Smith",
-//         content: "Vitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enimVitae augue tortor at quisque est tempus enim. Lorem ipsum dolor sit amet consectetur. Aliquam malesuada consequat turpis ut faucibus. Aenean lorem vulputate aliquam suspendisse. Lacus orci gravida cras gravida nulla."
-//     },
-//     {
-//         id: 3,
-//         name: "Emma Wilson",
-//         content: "Aliquam malesuada consequat turpis ut faucibus. Lorem ipsum dolor sit amet consectetur. Vitae augue tortor at quisque est tempus enim. Aenean lorem vulputate aliquam suspendisse. Lacus orci gravida cras gravida nulla."
-//     },
-//     {
-//         id: 4,
-//         name: "Michael Brown",
-//         content: "Aenean lorem vulputate aliquam suspendisse. Lorem ipsum dolor sit amet consectetur. Vitae augue tortor at quisque est tempus enim. Aliquam malesuada consequat turpis ut faucibus. Lacus orci gravida cras gravida nulla."
-//     }
-// ]
 
 export default function Testimonials() {
 

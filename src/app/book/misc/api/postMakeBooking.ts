@@ -13,7 +13,7 @@ type payload ={
 
 const makeBooking = async(data:payload)=>{
     const res = await BookingAppAxios.post("/studio/bookings/", data)
-    return res.data
+    return res.data as TBookingAPIResponse
 }
 
 export const useMakeBooking =()=>{
@@ -21,4 +21,17 @@ export const useMakeBooking =()=>{
         mutationFn:makeBooking,
         mutationKey: ['make-booking']
     })
+}
+
+interface TBookingAPIResponse {
+  message: string;
+  availability: Availability[];
+  checkout_url: string;
+}
+
+interface Availability {
+  service: string;
+  category: string;
+  book_date: string;
+  status: string;
 }

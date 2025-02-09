@@ -22,7 +22,7 @@ export function ServicesSection() {
       windowWidth <= 1560 ? 420
         :
         600
-    const verticalRadius = 320 // Kept vertical radius the same
+    const verticalRadius = 360 // Kept vertical radius the same
     const x = Math.cos(angle) * horizontalRadius
     const y = Math.sin(angle) * verticalRadius
     return { x, y }
@@ -32,7 +32,7 @@ export function ServicesSection() {
   }
 
   return (
-    <section className="relative bg-black py-20">
+    <section className="relative lg:min-h-screen lg:h-max bg-black py-20">
       <div className="w-[95vw] max-w-[1440px] mx-auto px-4">
         {/* Services Layout */}
         <div className="relative">
@@ -44,7 +44,7 @@ export function ServicesSection() {
           </div>
 
           {/* Desktop Circular Layout */}
-          <div className="hidden lg:flex items-center md:justify-center relative h-[900px] w-full mx-auto">
+          <div className="hidden lg:flex items-center md:justify-center relative h-[1400px] w-full mx-auto">
             <div className="text-center mb-16">
               <ShadowText
                 text="OUR SERVICES"

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client"
 
+import { services_images } from "@/components/ServicesSlideshow"
 import { Service } from "@/contexts/info"
 import { motion } from "framer-motion"
 import Image from "next/image"
@@ -19,10 +20,10 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
       transition={{ delay: index * 0.1 }}
       className="group relative overflow-hidden rounded-[2rem]"
     >
-      <Link href={service.service_type.toLowerCase()} className="block">
+      <Link href={`/services?s=${service.service_type.toLowerCase()}`} className="block">
         <div className="relative flex items-center justify-center aspect-[5/3] overflow-hidden">
           <Image
-            src={service.icon || "/images/landing/landing-service-mixing.png"}
+            src={service.icon || services_images[index] || "/images/landing/landing-service-mixing.png"}
             alt={service.service_name}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-110"
