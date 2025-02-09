@@ -346,7 +346,9 @@ export function BookingForm() {
           }}
           selectedDate={
             datePickerService && selectedServices.find((s) => s.categoryId === datePickerService)?.date
-            ? new Date(selectedServices.find((s) => s.categoryId === datePickerService)?.date!)
+            ? 
+            // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+            new Date(selectedServices.find((s) => s.categoryId === datePickerService)?.date!)
             : undefined
           }
           selectedTime={selectedServices.find((s) => s.categoryId === datePickerService)?.time}

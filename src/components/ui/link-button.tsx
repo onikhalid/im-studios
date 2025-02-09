@@ -36,6 +36,7 @@ const iconvar = {
     outlined: 'bg-transparent',
     unstyled: '',
     cta: '',
+    reverse_cta:''
 }
 
 const LinkButton = React.forwardRef<HTMLAnchorElement, LinkButtonProps>(
