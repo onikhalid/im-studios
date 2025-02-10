@@ -24,7 +24,6 @@ export const initialAuthState: AuthContextType = {
    isFetchingAppInfo: false
 };
 
-
 interface TWebAppAPIResponse {
   hero_section: Herosection;
   services: Service[];
@@ -76,16 +75,17 @@ interface Teammember {
 
 interface Footer {
   id: string;
+  whatsapp_url: string;
   created_at: string;
   updated_at: string;
   copyright_text: string;
   contact_phone_number: string;
   whatsapp_phone_number: string;
   x_link: null;
-  linkedin_link: null;
+  linkedin_link: string;
   instagram_link: string;
   facebook_link: null;
-  contact_email: null;
+  contact_email: string;
   telegram_link: null;
 }
 
@@ -100,29 +100,14 @@ interface About {
 
 export interface Service {
   id: string;
-  categories: (Category | Categories2)[];
+  categories: Category[];
   created_at: string;
   updated_at: string;
   service_name: string;
   service_type: string;
   service_description: null | string;
-  icon: string | null;
-  equipment: null;
-}
-
-export interface Categories2 {
-  id: string;
-  created_at: string;
-  updated_at: string;
-  category_name: string;
-  sub_category_name: string;
-  sub_category_cost: string;
-  category_description: string;
-  category_cost: string;
-  category_hours: number;
-  start_time: string;
-  end_time: null | string;
-  service: string;
+  icon: null;
+  equipment: null | string;
 }
 
 export interface Category {
@@ -134,9 +119,9 @@ export interface Category {
   sub_category_cost: string;
   category_description: string;
   category_cost: string;
-  category_hours: string | null;
-  start_time: string | null;
-  end_time: null;
+  category_hours: null | null | number | number;
+  start_time: null | null | string | string;
+  end_time: null | null | string | string;
   service: string;
 }
 
@@ -148,6 +133,7 @@ interface Herosection {
   cta_text: string;
   subtitle: string;
   background_image: null;
+  hero_text: string[];
 }
 
 // const fetchServices = async (): Promise<TService[]> => {
@@ -164,12 +150,11 @@ const fetchWebApp = async (): Promise<TWebAppAPIResponse> => {
 }
 
 
-// Create Context
+
 const AuthContext = createContext<AuthContextType>({
     ...initialAuthState,
 });
 
-// Provider Component
 export const InfoProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
    

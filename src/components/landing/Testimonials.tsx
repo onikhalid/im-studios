@@ -80,6 +80,9 @@ export default function Testimonials() {
                                         {appInfo?.testimonials[currentIndex].name}
                                     </h3>
                                     <p className="text-[#99999A] text-sm md:text-lg font-sans leading-loose mb-8 text-balance max-md:px-1.5">
+                                        {appInfo?.testimonials[currentIndex].review  || ""}
+                                    </p>
+                                    <p className="text-[#99999A] text-sm md:text-base font-sans leading-loose mb-8 text-balance max-md:px-1.5">
                                         {appInfo?.testimonials[currentIndex].role}
                                     </p>
 
@@ -90,13 +93,7 @@ export default function Testimonials() {
                             </LinkButton>
                         </div>
 
-                        {/* <div className="flex justify-center items-center gap-4 mt-12">
-                            <MoveLeft className="w-4 h-4 opacity-50" />
-                            <span className="text-sm font-mono">
-                                {currentIndex + 1}/{testimonials.length}
-                            </span>
-                            <MoveRight className="w-4 h-4 opacity-50" />
-                        </div> */}
+                       
                     </div>
                 </div>
             </div>

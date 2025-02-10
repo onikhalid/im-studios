@@ -2,22 +2,22 @@
 
 import { useState } from "react"
 import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { format } from "date-fns"
-import { Button } from "@/components/ui/button"
 import { CalendarIcon, X } from "lucide-react"
+
+import { zodResolver } from "@hookform/resolvers/zod"
+import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
-// import { Badge } from "@/components/ui/badge"
-import { bookingFormSchema, type BookingFormValues, type SelectedService } from "../lib/schema"
-import { type Categories2, type Category, useAppInfo } from "@/contexts/info"
-import { DatePickerDialog } from "./DatePickerDialog"
 import { convertKebabAndSnakeToTitleCase } from "@/utils/strings"
-import { useMakeBooking } from "../api/postMakeBooking"
 import Spinner from "@/components/ui/spinner"
+import { type Category, useAppInfo } from "@/contexts/info"
+
+import { bookingFormSchema, type BookingFormValues, type SelectedService } from "../lib/schema"
+import { DatePickerDialog } from "./DatePickerDialog"
+import { useMakeBooking } from "../api/postMakeBooking"
 import { useRouter, useSearchParams } from "next/navigation"
-// import { ServiceSelector } from "./ServiceSelector"
 
 export function BookingForm() {
     const { appInfo } = useAppInfo()
@@ -50,7 +50,7 @@ export function BookingForm() {
         setSelectedServiceId(serviceId)
     }
 
-    const handleCategorySelect = (category: Category | Categories2) => {
+    const handleCategorySelect = (category: Category) => {
         const service = appInfo?.services?.find((s) => s.id === selectedServiceId)
         if (!service) return
 
@@ -75,7 +75,6 @@ export function BookingForm() {
             ])
         }
 
-        // Update form bookings
         updateFormBookings()
     }
 

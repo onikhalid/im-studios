@@ -4,7 +4,7 @@ import { Clock } from "lucide-react"
 import { useAppInfo } from "@/contexts/info"
 
 import InfiniteMarquee from "./InfiniteMarquee"
-import { LinkButton } from "../../ui"
+import { LinkButton, TransitioningText } from "../../ui"
 
 export default function Hero() {
     const { appInfo } = useAppInfo()
@@ -21,9 +21,13 @@ export default function Hero() {
                     <h2 className="text-white/70 font-mono text-lg md:text-xl mb-4">
                         WHERE CREATIVITY AND CRAFT MEETS
                     </h2>
-                    <h1 className="text-white font-poppins [font-size:clamp(3.75rem,22vw,350px)] 2xl:[font-size:clamp(4rem,25vw,380px)] font-bold h-[0.9lh] leading-[0.9] -mt-4 -ml-2.5 md:-ml-4">
+                    {/* <h1 className="text-white font-poppins [font-size:clamp(3.75rem,22vw,350px)] 2xl:[font-size:clamp(4rem,25vw,380px)] font-bold h-[0.9lh] leading-[0.9] -mt-4 -ml-2.5 md:-ml-4">
                         RHYTHM
-                    </h1>
+                    </h1> */}
+
+                    <TransitioningText
+                        texts={appInfo?.hero_section.hero_text || ["RHYTHM"]}
+                    />
 
                     <p className="text-white/70 font-poppins md:text-lg mt-4 max-w-2xl">
                         {
