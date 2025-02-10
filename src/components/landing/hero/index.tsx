@@ -1,8 +1,14 @@
-import InfiniteMarquee from "./InfiniteMarquee"
-import { LinkButton } from "../../ui"
+'use client'
 import { Clock } from "lucide-react"
 
+import { useAppInfo } from "@/contexts/info"
+
+import InfiniteMarquee from "./InfiniteMarquee"
+import { LinkButton } from "../../ui"
+
 export default function Hero() {
+    const { appInfo } = useAppInfo()
+
     return (
         <section
             className="relative h-screen bg-cover bg-center snap-start"
@@ -20,7 +26,9 @@ export default function Hero() {
                     </h1>
 
                     <p className="text-white/70 font-poppins md:text-lg mt-4 max-w-2xl">
-                        For those who dare to dream in sound, blend innovation with passion, and turn every beat into a masterpiece.
+                        {
+                            appInfo?.hero_section.subtitle || "For those who dare to dream in sound, blend innovation with passion, and turn every beat into a masterpiece."
+                        }
                     </p>
                     <div className="flex max-md:flex-col md:items-center gap-8 mt-8">
                         <LinkButton
@@ -29,7 +37,7 @@ export default function Hero() {
                             href="/book"
                         // className=""
                         >
-                            Book now
+                            {appInfo?.hero_section.cta_text || "Book now"}
                         </LinkButton>
                         <div className="flex items-center gap-2 text-white/70">
                             <Clock className="w-5 h-5" />

@@ -3,6 +3,7 @@
 import { ReactNode, useRef } from "react"
 import { motion, useScroll, useSpring, useTransform, useMotionValue, useVelocity, useAnimationFrame } from "framer-motion"
 import { wrap } from "@motionone/utils"
+import { useAppInfo } from "@/contexts/info"
 
 interface MarqueeProps {
   children: ReactNode
@@ -51,13 +52,15 @@ function MarqueeText({ children, baseVelocity = 100 }: MarqueeProps) {
 }
 
 export default function InfiniteMarquee() {
-  const services = [
+  const { appInfo } = useAppInfo()
+
+  const services = appInfo?.services.map(service => service.service_name) || [
     "Recording",
     "Rehearsals",
     "Mixing",
     "Mastering",
     "Podcast",
-    "Live streams", 
+    "Live streams",
     "Duplications",
   ]
 

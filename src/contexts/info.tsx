@@ -42,6 +42,7 @@ interface Testimonial {
   updated_at: string;
   name: string;
   role: string;
+  review: null;
 }
 
 interface Faq {
@@ -78,9 +79,10 @@ interface Footer {
   created_at: string;
   updated_at: string;
   copyright_text: string;
-  contact_phone_number: null;
-  whatsapp_phone_number: null;
+  contact_phone_number: string;
+  whatsapp_phone_number: string;
   x_link: null;
+  linkedin_link: null;
   instagram_link: string;
   facebook_link: null;
   contact_email: null;
@@ -96,7 +98,7 @@ interface About {
   image: null;
 }
 
-interface Service {
+export interface Service {
   id: string;
   categories: (Category | Categories2)[];
   created_at: string;
@@ -104,11 +106,11 @@ interface Service {
   service_name: string;
   service_type: string;
   service_description: null | string;
-  icon: null;
+  icon: string | null;
   equipment: null;
 }
 
-interface Categories2 {
+export interface Categories2 {
   id: string;
   created_at: string;
   updated_at: string;
@@ -118,10 +120,12 @@ interface Categories2 {
   category_description: string;
   category_cost: string;
   category_hours: number;
+  start_time: string;
+  end_time: null | string;
   service: string;
 }
 
-interface Category {
+export interface Category {
   id: string;
   created_at: string;
   updated_at: string;
@@ -130,7 +134,9 @@ interface Category {
   sub_category_cost: string;
   category_description: string;
   category_cost: string;
-  category_hours: null;
+  category_hours: string | null;
+  start_time: string | null;
+  end_time: null;
   service: string;
 }
 
