@@ -156,7 +156,7 @@ export function BookingForm() {
 
   return (
     <>
-      <div className=" relative w-full mx-auto flex max-lg:flex-col items-center gap-12 lg:h-screen overflow-y-hidden bg-[#0E0E0E] ">
+      <div className=" relative w-full mx-auto flex max-lg:flex-col items-center gap-12 gap-y-6 lg:h-screen overflow-y-hidden bg-[#0E0E0E] ">
         <section className="pt-12 leading-tight lg:max-h-full lg:w-1/2 overflow-hidden lg:sticky top-0 p-6">
           <h1 className="text-[7rem] lg:text-[15rem] leading-none font-bebas text-[#FFFFFF21]">
             BOOK
@@ -168,9 +168,9 @@ export function BookingForm() {
           </h1>
         </section>
 
-        <section className="lg:max-h-full lg:w-1/2 overflow-y-scroll p-6 lg:pt-20 xl:pr-0">
-          <div className="space-y-8 bg-[#141414] md:p-8 xl:p-12 rounded-l-2xl max-w-2xl">
-            <p className="text-xl text-gray-400">Provide details below to book a session today</p>
+        <section className="lg:max-h-full lg:w-1/2 overflow-y-scroll p-4 md:p-6 lg:pt-20 xl:pr-0">
+          <div className="space-y-8 bg-[#141414] p-6 md:p-8 xl:p-12 rounded-l-2xl max-w-2xl">
+            <p className="text-lg md:text-xl text-gray-400">Provide details below to book a session today</p>
 
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
