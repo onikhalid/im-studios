@@ -20,7 +20,7 @@ const ServicesPage = () => {
                         <p className="text-[#99999A] font-poppins text-lg mt-8 text-balance max-w-3xl text-center">
                             From recording to mastering, we provide the tools, expertise, and space to bring your creative vision to life.
                         </p>
-                     
+
                     </div>
                 </div>
             </section>
@@ -30,10 +30,10 @@ const ServicesPage = () => {
             <section className="min-h-screen snap-start flex flex-col">
                 <div className='grow bg-[#0E0E0E]'>
 
-                <Testimonials />
+                    <Testimonials />
                 </div>
-            {/* </section> */}
-            {/* <section className=" snap-start flex flex-col"> */}
+                {/* </section> */}
+                {/* <section className=" snap-start flex flex-col"> */}
                 <Footer />
             </section>
         </main>

@@ -17,7 +17,7 @@ export default function AppHeader() {
         },
         {
             name: "About us",
-            href: "#about"
+            href: "/about-us"
         },
         {
             name: "Contact us",
