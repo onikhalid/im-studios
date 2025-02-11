@@ -2,12 +2,12 @@
 'use client';
 
 import React, {
-    createContext,
-    useContext,
-    ReactNode
+  createContext,
+  useContext,
+  ReactNode
 } from 'react';
 import { BookingAppAxios, } from "@/utils/axios";
-import {  useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 
 
@@ -15,13 +15,13 @@ import {  useQuery } from "@tanstack/react-query";
 
 
 export interface AuthContextType {
-   appInfo: TWebAppAPIResponse | undefined;
-    isFetchingAppInfo: boolean;
+  appInfo: TWebAppAPIResponse | undefined;
+  isFetchingAppInfo: boolean;
 }
 
 export const initialAuthState: AuthContextType = {
-   appInfo: undefined,
-   isFetchingAppInfo: false
+  appInfo: undefined,
+  isFetchingAppInfo: false
 };
 
 interface TWebAppAPIResponse {
@@ -81,12 +81,13 @@ interface Footer {
   copyright_text: string;
   contact_phone_number: string;
   whatsapp_phone_number: string;
-  x_link: null;
+  x_link: string | null;
   linkedin_link: string;
   instagram_link: string;
-  facebook_link: null;
+  facebook_link: string | null;
   contact_email: string;
-  telegram_link: null;
+  telegram_link: string | null;
+  mission_statement: string;
 }
 
 interface About {
@@ -95,7 +96,7 @@ interface About {
   updated_at: string;
   title: string;
   content: string;
-  image: null;
+  image: string | null;
 }
 
 export interface Service {
@@ -106,7 +107,7 @@ export interface Service {
   service_name: string;
   service_type: string;
   service_description: null | string;
-  icon: null;
+  icon: string | null;
   equipment: null | string;
 }
 
@@ -145,49 +146,49 @@ interface Herosection {
 //     return response.data;
 // }
 const fetchWebApp = async (): Promise<TWebAppAPIResponse> => {
-    const response = await BookingAppAxios.get<TWebAppAPIResponse>('/webapp');
-    return response.data;
+  const response = await BookingAppAxios.get<TWebAppAPIResponse>('/webapp');
+  return response.data;
 }
 
 
 
 const AuthContext = createContext<AuthContextType>({
-    ...initialAuthState,
+  ...initialAuthState,
 });
 
 export const InfoProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
-   
-    const useFetchAppInfo = () => {
-        return useQuery({
-            queryKey: ['app-info'],
-            queryFn: fetchWebApp,
-        })
-    }
-    const { data: appInfo, isLoading: isFetchingAppInfo } = useFetchAppInfo()
+
+  const useFetchAppInfo = () => {
+    return useQuery({
+      queryKey: ['app-info'],
+      queryFn: fetchWebApp,
+    })
+  }
+  const { data: appInfo, isLoading: isFetchingAppInfo } = useFetchAppInfo()
 
 
-  
 
-    return (
-        <AuthContext.Provider
-            value={{
-                appInfo,
-                isFetchingAppInfo
-            }}
-        >
-            {children}
-        </AuthContext.Provider>
-    );
+
+  return (
+    <AuthContext.Provider
+      value={{
+        appInfo,
+        isFetchingAppInfo
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 // Custom hook for using auth context
 export const useAppInfo = () => {
-    const context = useContext(AuthContext);
+  const context = useContext(AuthContext);
 
-    if (!context) {
-        throw new Error('useAppInfo must be used within an InfoProvider');
-    }
+  if (!context) {
+    throw new Error('useAppInfo must be used within an InfoProvider');
+  }
 
-    return context;
+  return context;
 };

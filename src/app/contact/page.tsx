@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { Facebook, Instagram, Linkedin, Mail, PhoneCall, Twitter } from 'lucide-react'
 import Link from "next/link";
 import Image from "next/image";
+import { Whatsapp } from 'iconsax-react'
+
 
 import { useAppInfo } from "@/contexts/info";
 import { Footer } from "@/components/landing";
@@ -43,6 +45,12 @@ export default function Contact() {
             icon: <Twitter className="w-7 h-7" />,
         },
         {
+            platform: "Whatsapp",
+            handle: "@IMStudioz",
+            link: appInfo?.footer.whatsapp_url || '#',
+            icon: <Whatsapp className="w-7 h-7" />,
+        },
+        {
             platform: "Instagram",
             handle: appInfo?.footer.instagram_link || "@IMStudioz",
             link: "https://instagram.com/IMStudioz",
@@ -71,7 +79,7 @@ export default function Contact() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="relative flex flex-col lg:grid grid-cols-2 justify-center items-center mx-auto min-h-screen space-y-8 p-4 md:p-10  xl:p-20 !pt-20 md:pt-20 gap-20 image-background"
             >
-                <div className="self-center">
+                <div className="self-center w-full">
                     <h1 className="text-5xl font-bold mt-7 font-bebas xl:text-[9rem] tracking-tight">CONTACT US</h1>
                     <div className="flex max-md:flex-col gap-7 mt-4">
                         <Link href={`tel:${appInfo?.footer.contact_phone_number || ""}`} className="text-lg flex flex-row gap-3 items-center">
@@ -86,7 +94,7 @@ export default function Contact() {
 
                     <div className="mt-8 space-y-2">
                         <p className="text-sm font-semibold">Socials</p>
-                        <div className="flex items-center text-center gap-4">
+                        <div className="flex items-center text-center gap-4 flex-wrap">
                             {socials.map((social, index) => (
                                 <a
                                     key={index}
@@ -97,7 +105,7 @@ export default function Contact() {
                                 >
                                     <span className="bg-[#212121] rounded-full p-2.5">
                                         {social.icon}
-                                    </span>  
+                                    </span>
                                 </a>
                             ))}
                         </div>
@@ -181,7 +189,7 @@ export default function Contact() {
                     </motion.button>
                 </motion.form>
                 <Image
-                className="absolute bottom-0 right-0 rounded-[50px] blur-2xl opacity-30"
+                    className="absolute bottom-0 right-0 rounded-[50px] blur-2xl opacity-30"
                     src="/images/contact_bg_gradient.png"
                     alt="bg-gradient"
                     width={650}

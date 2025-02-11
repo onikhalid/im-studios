@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Facebook, Instagram, Linkedin, Send, Twitter, } from 'lucide-react'
 import { useAppInfo } from "@/contexts/info"
 import FooterSkeleton from "./FooterSkeleton"
+import { Whatsapp } from 'iconsax-react'
 
 
 export default function Footer() {
@@ -45,11 +46,11 @@ export default function Footer() {
               </Link>
               <Link
                 target="_blank"
-                href={appInfo?.footer?.telegram_link || "#"}
+                href={appInfo?.footer?.whatsapp_url || "#"}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
                 aria-label="Telegram"
               >
-                <Send className="w-5 h-5" />
+                <Whatsapp className="w-5 h-5" />
               </Link>
             </div>
 

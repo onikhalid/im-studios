@@ -66,6 +66,7 @@ export function BookingForm() {
                     serviceName: service.service_name,
                     categoryId: category.id,
                     categoryName: category.category_name,
+                    subCategoryName: category.sub_category_name,
                     cost: category.category_cost,
                     hours:
                         typeof category.category_hours === "string"
@@ -246,7 +247,7 @@ export function BookingForm() {
                                                             onClick={() => handleCategorySelect(category)}
                                                         >
                                                             <div className="flex flex-col items-start text-left text-sm text-[#D8D8DF]">
-                                                                <p>{convertKebabAndSnakeToTitleCase(category.category_name)}</p>
+                                                                <p>{convertKebabAndSnakeToTitleCase(category.category_name)} - {category.sub_category_name}</p>
                                                                 <p className="text-white font-semibold">£{category.category_cost}</p>
                                                             </div>
 
@@ -279,7 +280,7 @@ export function BookingForm() {
                                                                     created_at: "",
                                                                     updated_at: "",
                                                                     category_description: "",
-                                                                    sub_category_name: "",
+                                                                    sub_category_name: service.subCategoryName || "",
                                                                     sub_category_cost: "",
                                                                     service: "",
                                                                     start_time: "",
@@ -291,7 +292,7 @@ export function BookingForm() {
                                                         </Button>
                                                         <div className="flex-1 flex items-center">
                                                             <h4 className="font-medium text-white">
-                                                                {convertKebabAndSnakeToTitleCase(service.categoryName)}
+                                                                {convertKebabAndSnakeToTitleCase(service.categoryName)} - {service.subCategoryName}
                                                             </h4>
                                                         </div>
                                                     </div>

@@ -52,7 +52,7 @@ const ShowcaseCarousel = () => {
     }
 
     return (
-        <div className="w-full min-h-screen bg-[#0E0E0E] text-white">
+        <div className="w-full min-h-screen max-md:py-12 bg-[#0E0E0E] text-white">
             <AnimatePresence mode="wait">
                 <motion.div
                     key={currentIndex}
@@ -64,12 +64,12 @@ const ShowcaseCarousel = () => {
                 >
                     <article className='grid lg:grid-cols-2 px-5'>
                         <div className='flex flex-col justify-center items-center'>
-                            <h1 className="font-poppins font-semibold max-w-[600px] mb-6 !leading-[4rem] text-balance">
+                            <h1 className="font-poppins font-semibold w-full md:max-w-[600px] mb-6 !leading-[4rem] text-balance">
                                 <BackgroundPerLine
                                     text={carousels[currentIndex].title}
                                 />
                             </h1>
-                            <p className="text-[#99999A] text-sm md:text-lg font-sans leading-loose lg:mb-8 text-balance max-md:px-1.5 max-w-[600px]">
+                            <p className="text-[#99999A] text-sm md:text-lg font-sans leading-loose lg:mb-8 text-balance max-md:px-1.5 w-full md:max-w-[600px]">
                                 {carousels[currentIndex].description}
                             </p>
                             <div className='hidden lg:flex gap-10'>
@@ -98,7 +98,7 @@ const ShowcaseCarousel = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='mt-5 lg:mt-10 w-full max-lg:aspect-video max-lg:overflow-hidden max-lg:max-h-[200px] max-w-[600px] flex max-lg:justify-center max-lg:items-center lg:justify-self-end lg:translate-y-[20%]'>
+                        <div className='mt-5 lg:mt-10 w-full max-lg:aspect-video max-lg:overflow-hidden max-lg:max-h-[200px] md:max-w-[600px] flex max-lg:justify-center max-lg:items-center lg:justify-self-end lg:translate-y-[20%]'>
                             <Image
                                 src={carousels[currentIndex].image}
                                 alt="image"
@@ -107,7 +107,7 @@ const ShowcaseCarousel = () => {
                                 className='max-lg:object-cover'
                             />
                         </div>
-                        <div className='flex lg:hidden gap-10 mt-5 max-w-[600px] w-full'>
+                        <div className='flex flex-col lg:hidden gap-10 mt-5 w-full md:max-w-[600px]'>
                             <LinkButton variant="cta" size="cta" href="/book" className='text-base'>
                                 Book a session
                             </LinkButton>

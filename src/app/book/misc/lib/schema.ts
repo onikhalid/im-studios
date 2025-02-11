@@ -20,6 +20,7 @@ export type BookingFormValues = z.infer<typeof bookingFormSchema>
 export interface SelectedService {
   serviceId: string
   serviceName: string
+  subCategoryName: string;
   categoryId: string
   categoryName: string
   cost: string
