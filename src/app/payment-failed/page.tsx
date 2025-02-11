@@ -9,7 +9,7 @@ const transaction_ref = params.get('ref')
 const {data} = useGetBookingDetails(transaction_ref!)
 console.log(data)
     return (
-        <div className=" relative w-full mx-auto flex max-lg:flex-col items-center gap-12 lg:h-screen overflow-y-hidden bg-[#0E0E0E] lg:p-20 text-6xl">
+        <div className=" relative w-full mx-auto flex max-lg:flex-col items-center gap-12 lg:h-screen overflow-y-hidden bg-[#0E0E0E] lg:p-20 ">
             PaymentSuccessPage
         </div>
     )
