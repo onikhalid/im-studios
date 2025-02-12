@@ -82,14 +82,14 @@ export default function Contact() {
                 <div className="self-center w-full">
                     <h1 className="text-5xl font-bold mt-7 font-bebas xl:text-[9rem] tracking-tight">CONTACT US</h1>
                     <div className="flex max-md:flex-col gap-7 mt-4">
-                        <Link href={`tel:${appInfo?.footer.contact_phone_number || ""}`} className="text-lg flex flex-row gap-3 items-center">
+                        <Link href={`tel:${appInfo?.footer.contact_phone_number || ""}`} className="text-lg flex flex-row gap-3 items-center hover:text-blue-200">
                             <PhoneCall className="bg-[#212121] rounded-full p-1.5 w-8 h-8" />
                             <span>{appInfo?.footer.contact_phone_number || "+123-456-7890"}</span>
                         </Link>
-                        <div className="text-lg flex flex-row gap-3 items-center">
+                        <Link href={`mailto:${appInfo?.footer.contact_email || ""}`} className="text-lg flex flex-row gap-3 items-center hover:text-pink-300 ">
                             <Mail className="bg-[#212121] rounded-full p-1.5 w-8 h-8" />
                             <span>contact@imstudioz.com</span>
-                        </div>
+                        </Link>
                     </div>
 
                     <div className="mt-8 space-y-2">
@@ -189,11 +189,11 @@ export default function Contact() {
                     </motion.button>
                 </motion.form>
                 <Image
-                    className="absolute bottom-0 right-0 rounded-[50px] blur-2xl opacity-30"
+                    className="absolute bottom-0 right-0 rounded-[50%] blur-[1000px] opacity-30"
                     src="/images/contact_bg_gradient.png"
                     alt="bg-gradient"
-                    width={650}
-                    height={650}
+                    width={750}
+                    height={750}
                 />
             </motion.div>
 

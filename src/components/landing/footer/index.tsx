@@ -60,7 +60,7 @@ export default function Footer() {
                 href="/about"
                 className="text-white/80 hover:text-white transition-colors"
               >
-                About Us
+                About us
               </Link>
               <Link
                 href="/services"
@@ -72,7 +72,7 @@ export default function Footer() {
                 href="/contact"
                 className="text-white/80 hover:text-white transition-colors"
               >
-                contact us
+                Contact us
               </Link>
             </nav>
 

@@ -3,6 +3,7 @@
 
 import { services_images } from "@/components/ServicesSlideshow"
 import { Service } from "@/contexts/info"
+import { convertKebabAndSnakeToTitleCase } from "@/utils/strings"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import Link from "next/link"
@@ -30,7 +31,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
           />
           <div className="absolute inset-0 bg-black/60" />
           <div className="z-[2] p-4 px-6  rounded-full bg-[#171717] flex items-center justify-center">
-            <h3 className="text-xl text-white font-light">{service.service_name}</h3>
+            <h3 className="text-xl text-white font-light">{convertKebabAndSnakeToTitleCase(service.service_name)}</h3>
           </div>
         </div>
       </Link>

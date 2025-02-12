@@ -14,7 +14,7 @@ const Page = () => {
     ]
     return (
 
-        <div className='h-screen snap-y snap-always overflow-y-scroll bg-black'>
+        <div className='h-screen snap-y snap-always overflow-y-scroll bg-[#0E0E0E]'>
             <section className='relative grid grid-cols-1 md:grid-cols-2 lg:min-h-screen pt-20 md:pt-0'>
 
                 <h1 className="pt-12 leading-tight lg:max-h-full overflow-hidden lg:sticky top-0 p-6 max-md:pb-0 m-auto">
@@ -41,7 +41,7 @@ const Page = () => {
                 />
             </section>
 
-            <section className='relative grid grid-cols-1 md:grid-cols-2  lg:min-h-[90vh] pt-20 md:pt-0'>
+            <section className='relative grid grid-cols-1 md:grid-cols-2 lg:min-h-[90vh] pt-20 md:pt-0 bg-black'>
                 <div className='text-[#FFFFFFE8] xl:text-xl font-light flex flex-col justify-center w-full max-w-3xl mx-auto max-md:order-2'>
                     <div className='grid lg:flex items-stretch lg:max-xl:justify-around flex-wrap gap-5 xl:gap-10'>
                         {

@@ -1,11 +1,10 @@
 "use client"
 
 import { motion, AnimatePresence } from "framer-motion"
-import { Button } from "@/components/ui/button"
 import { ServiceCard } from "./ServiceCard"
 import { useAppInfo } from "@/contexts/info"
 import { useWindowWidth } from "@/hooks/useWindowWidth"
-import { ShadowText } from "@/components/ui"
+import { LinkButton, ShadowText } from "@/components/ui"
 
 
 
@@ -49,12 +48,13 @@ export function ServicesSection() {
               <ShadowText
                 text="OUR SERVICES"
               />
-              <Button
+              <LinkButton
+                href="/services"
                 variant="outline"
-                className="rounded-full px-8"
+                className="rounded-full px-8 relative z-[1000] mt-4"
               >
                 Learn more
-              </Button>
+              </LinkButton>
             </div>
 
             <AnimatePresence>
