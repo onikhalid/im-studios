@@ -24,7 +24,7 @@ export const initialAuthState: AuthContextType = {
   appInfo: undefined,
   isFetchingAppInfo: false
 };
-interface TWebAppAPIResponse {
+export interface TWebAppAPIResponse {
   hero_section: Herosection;
   services: Service[];
   about: About;
@@ -166,7 +166,7 @@ export const InfoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   return (
     <AuthContext.Provider
       value={{
-        appInfo: appInfo,
+        appInfo: appInfo || FALLBACK_INFO,
         isFetchingAppInfo
       }}
     >

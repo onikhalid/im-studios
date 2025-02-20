@@ -1,4 +1,6 @@
-export const FALLBACK_INFO = {
+import { TWebAppAPIResponse } from "@/contexts/info";
+
+export const FALLBACK_INFO: TWebAppAPIResponse = {
     "hero_section": {
       "id": "4b07f8fc-8ab6-4495-860b-c77b71230d1a",
       "created_at": "2025-02-07T10:44:28.971716Z",
