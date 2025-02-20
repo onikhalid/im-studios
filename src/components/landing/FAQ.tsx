@@ -21,7 +21,7 @@ export default function FAQ() {
   }
 
   return (
-    <section className="flex flex-col justify-center h-screen snap-start bg-black text-white py-24">
+    <section className="flex flex-col justify-center md:h-screen snap-start bg-black text-white py-24">
       <div className="w-[95%] md:w-[90%] max-w-[1600px] mx-auto xl:flex items-start gap-16 xl:gap-24 xl:justify-between">
         <ShadowText
           text="FREQENTLY ASKED QUESTIONS"

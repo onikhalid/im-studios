@@ -33,7 +33,19 @@ export function ServicesSection() {
   return (
     <section className="relative lg:min-h-screen lg:h-max bg-black py-20">
       <div className="w-[95vw] max-w-[1440px] mx-auto px-4">
-        {/* Services Layout */}
+        <div className="text-center mb-16 lg:hidden">
+          <ShadowText
+            text="OUR SERVICES"
+          />
+          <LinkButton
+            href="/services"
+            variant="outline"
+            className="rounded-full px-8 relative z-[1000] mt-4"
+          >
+            Learn more
+          </LinkButton>
+        </div>
+
         <div className="relative">
           {/* Mobile Layout */}
           <div className="grid grid-cols-1 gap-6 lg:hidden">

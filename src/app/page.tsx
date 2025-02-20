@@ -4,7 +4,7 @@ import React from 'react';
 
 const LandingPage = () => {
   return (
-    <main className="h-screen  overflow-y-scroll">
+    <main className="h-screen  overflow-y-scroll max-md:w-screen max-md:overflow-x-hidden">
       <Hero />
       <ServicesSection />
       <ShowcaseCarousel />

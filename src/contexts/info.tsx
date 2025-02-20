@@ -8,6 +8,7 @@ import React, {
 } from 'react';
 import { BookingAppAxios, } from "@/utils/axios";
 import { useQuery } from "@tanstack/react-query";
+import { FALLBACK_INFO } from '@/constants';
 
 
 
@@ -23,7 +24,6 @@ export const initialAuthState: AuthContextType = {
   appInfo: undefined,
   isFetchingAppInfo: false
 };
-
 interface TWebAppAPIResponse {
   hero_section: Herosection;
   services: Service[];
@@ -41,7 +41,7 @@ interface Testimonial {
   updated_at: string;
   name: string;
   role: string;
-  review: null;
+  review: string | null;
 }
 
 interface Faq {
@@ -66,11 +66,11 @@ interface Teammember {
   updated_at: string;
   name: string;
   role: string;
-  nick_name: null;
-  image: null;
+  nick_name: string | null;
+  image: string | null;
   ig_link: null | string;
-  fb_link: null;
-  x_link: null;
+  fb_link: string | null;
+  x_link: string | null;
 }
 
 interface Footer {
@@ -96,34 +96,35 @@ interface About {
   updated_at: string;
   title: string;
   content: string;
-  image: string | null;
+  image: null;
 }
 
 export interface Service {
   id: string;
-  categories: Category[];
-  created_at: string;
-  updated_at: string;
   service_name: string;
   service_type: string;
   service_description: null | string;
   icon: string | null;
   equipment: null | string;
+  categories: Category[];
 }
 
 export interface Category {
   id: string;
-  created_at: string;
-  updated_at: string;
   category_name: string;
-  sub_category_name: string;
-  sub_category_cost: string;
   category_description: string;
-  category_cost: string;
+  category_cost: number;
   category_hours: null | null | number | number;
-  start_time: null | null | string | string;
-  end_time: null | null | string | string;
-  service: string;
+  start_time: string | null;
+  end_time: string | null;
+  sub_category_packages: (Subcategorypackage | Subcategorypackage)[];
+}
+
+interface Subcategorypackage {
+  id: string;
+  package_name: string;
+  package_description: string;
+  package_cost: number;
 }
 
 interface Herosection {
@@ -137,17 +138,9 @@ interface Herosection {
   hero_text: string[];
 }
 
-// const fetchServices = async (): Promise<TService[]> => {
-//     const response = await BookingAppAxios.get<TService[]>('/services');
-//     return response.data;
-// }
-// const fetchTeam = async (): Promise<TeamMember[]> => {
-//     const response = await BookingAppAxios.get<TeamMember[]>('/teams');
-//     return response.data;
-// }
 const fetchWebApp = async (): Promise<TWebAppAPIResponse> => {
   const response = await BookingAppAxios.get<TWebAppAPIResponse>('/webapp');
-  return response.data;
+  return response.data || FALLBACK_INFO;
 }
 
 
@@ -173,7 +166,7 @@ export const InfoProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   return (
     <AuthContext.Provider
       value={{
-        appInfo,
+        appInfo: appInfo,
         isFetchingAppInfo
       }}
     >

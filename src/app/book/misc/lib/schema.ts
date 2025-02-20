@@ -9,7 +9,7 @@ export const bookingFormSchema = z.object({
       z.object({
         service_category: z.string(),
         book_date: z.string(),
-        book_time: z.string().optional(),
+        book_time: z.string(),
       }),
     )
     .min(1, "Please select at least one service"),
@@ -20,7 +20,7 @@ export type BookingFormValues = z.infer<typeof bookingFormSchema>
 export interface SelectedService {
   serviceId: string
   serviceName: string
-  subCategoryName: string;
+  subCategoryName: string
   categoryId: string
   categoryName: string
   cost: string
@@ -28,4 +28,5 @@ export interface SelectedService {
   date?: string
   time?: string
 }
+
 
