@@ -11,11 +11,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input"
 import { convertKebabAndSnakeToTitleCase } from "@/utils/strings"
 import Spinner from "@/components/ui/spinner"
-import { type Category, Service, useAppInfo } from "@/contexts/info"
+import { type Category, type Service, useAppInfo } from "@/contexts/info"
 import { bookingFormSchema, type BookingFormValues, type SelectedService } from "../lib/schema"
 import { DatePickerDialog } from "./DatePickerDialog"
 import { useMakeBooking } from "../api/postMakeBooking"
 import { useRouter, useSearchParams } from "next/navigation"
+
+type SelectebleCatgory = Category & {
+    is_sub_category?: boolean;
+    sub_category_id?: string;
+}
 
 export function BookingForm() {
     const { appInfo } = useAppInfo()
@@ -47,14 +52,28 @@ export function BookingForm() {
         setSelectedServiceId(serviceId)
     }
 
-    const handleCategorySelect = (category: Category) => {
+    const handleCategorySelect = (category: SelectebleCatgory) => {
         const service = selecteableServices?.find((s) => s.id === selectedServiceId)
         if (!service) return
 
-        const exists = selectedServices.some((s) => s.categoryId === category.id)
+        const exists = selectedServices.some((s) => {
+            if(s.subCategoryId){
+                return s.subCategoryId === category.sub_category_id
+            }
+            else{
+                return s.categoryId === category.id
+            }
+        })
 
         if (exists) {
-            setSelectedServices((prev) => prev.filter((s) => s.categoryId !== category.id))
+            setSelectedServices((prev) => prev.filter((s) =>{
+                if(s.subCategoryId){
+                    return s.subCategoryId !== category.sub_category_id
+                }
+                else{
+                    return s.categoryId !== category.id
+                }
+            }))
         } else {
             setSelectedServices((prev) => [
                 ...prev,
@@ -62,6 +81,7 @@ export function BookingForm() {
                     serviceId: service.id,
                     serviceName: service.service_name,
                     categoryId: category.id,
+                    subCategoryId: category.sub_category_id,
                     categoryName: category.category_name,
                     subCategoryName: category.category_name || "",
                     cost: category.category_cost.toString(),
@@ -76,70 +96,59 @@ export function BookingForm() {
         updateFormBookings()
     }
 
-    const selecteableServices = useMemo(() => {
-        const new_services: Service[] = []
+    type SelectableService = Omit<Service, 'categories'> & {
+        categories: SelectebleCatgory[]
+    }
+    const selecteableServices: SelectableService[] = useMemo(() => {
+        const new_services: SelectableService[] = []
 
-        appInfo?.services.forEach(service => {
-            if (service.categories.some(category => category.sub_category_packages && category.sub_category_packages.length > 0)) {
-                const new_categories: Category[] = []
+        appInfo?.services.forEach((service) => {
+            if (
+                service.categories.some(
+                    (category) => category.sub_category_packages && category.sub_category_packages.length > 0,
+                )
+            ) {
+                const new_categories: SelectebleCatgory[] = []
 
-                service.categories.forEach(category => {
-                    category.sub_category_packages.forEach(subPackage => {
+                service.categories.forEach((category) => {
+                    category.sub_category_packages.forEach((subPackage) => {
                         new_categories.push({
-                            id: subPackage.id,
+                            id: category.id,
                             category_name: `${category.category_name} - ${subPackage.package_name}`,
                             category_description: subPackage.package_description,
                             category_cost: subPackage.package_cost,
                             category_hours: null,
                             start_time: null,
                             end_time: null,
+                            is_sub_category: true,
+                            sub_category_id: subPackage.id,
                             sub_category_packages: []
                         })
                     })
-
                 })
                 new_services.push({
                     ...service,
-                    categories: [...new_categories, ...service.categories.filter(category => !category.sub_category_packages?.length)]
+
+                    categories: [
+                        ...new_categories,
+                        ...service.categories.filter((category) => !category.sub_category_packages?.length),
+                    ],
                 })
-            }
-            else new_services.push(service)
+            } else new_services.push({ ...service, categories: service.categories.map((category) => ({ ...category, is_sub_category: false, sub_category_id: '0' })) })
         })
 
         return new_services
     }, [appInfo])
 
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleSubPackageSelect = (categoryId: string, subPackage: any) => {
-        setSelectedServices((prev) =>
-            prev.map((service) =>
-                service.categoryId === categoryId
-                    ? {
-                        ...service,
-                        subPackage: {
-                            id: subPackage.id,
-                            name: subPackage.package_name,
-                            description: subPackage.package_description,
-                            cost: subPackage.package_cost,
-                        },
-                        cost: subPackage.package_cost.toString(),
-                    }
-                    : service,
-            ),
-        )
 
-        updateFormBookings()
-    }
-
-    const handleDateSelect = (serviceId: string, date: Date, time: string) => {
+    const handleDateSelect = (serviceId: string, date: Date) => {
         setSelectedServices((prev) =>
             prev.map((service) =>
                 service.categoryId === serviceId
                     ? {
                         ...service,
                         date: format(date, "yyyy-MM-dd"),
-                        time,
                     }
                     : service,
             ),
@@ -147,8 +156,9 @@ export function BookingForm() {
 
         const updatedBookings = selectedServices.map((service) => ({
             service_category: service.categoryId,
+            sub_category_package: service.sub_category_packages,
             book_date: service.categoryId === serviceId ? format(date, "yyyy-MM-dd") : service.date || "",
-            book_time: service.categoryId === serviceId ? time : service.time || "",
+            quantity: 1,
         }))
 
         form.setValue("bookings", updatedBookings, {
@@ -162,8 +172,9 @@ export function BookingForm() {
             .filter((service) => service.date)
             .map((service) => ({
                 service_category: service.categoryId,
+                sub_category_package: service.subCategoryId,
                 book_date: service.date!,
-                book_time: service.time!,
+                quantity: 1,
             }))
         form.setValue("bookings", bookings)
     }
@@ -173,8 +184,8 @@ export function BookingForm() {
     const { mutate: makeBooking, isPending } = useMakeBooking()
 
     async function onSubmit(data: BookingFormValues) {
-        if (selectedServices.some((s) => !s.date || !s.time)) {
-            alert("Please select a date and time for all selected services")
+        if (selectedServices.some((s) => !s.date)) {
+            alert("Please select a date for all selected services")
             return
         }
 
@@ -182,8 +193,9 @@ export function BookingForm() {
             ...data,
             bookings: selectedServices.map((service) => ({
                 service_category: service.categoryId,
+                sub_category_package: service.subCategoryId,
                 book_date: service.date!,
-                book_time: service.time!,
+                quantity: 1,
             })),
         }
         console.log(payload)
@@ -277,7 +289,11 @@ export function BookingForm() {
                                             {selecteableServices
                                                 ?.find((s) => s.id === selectedServiceId)
                                                 ?.categories.map((category) => {
-                                                    const isSelected = selectedServices.some((s) => s.categoryId === category.id)
+                                                    const isSelected = selectedServices.some((s) =>
+                                                        s.subCategoryId ?
+                                                            s.subCategoryId === category.sub_category_id :
+                                                            s.categoryId === category.id
+                                                    )
                                                     return (
                                                         <div key={category.id}>
                                                             <button
@@ -286,35 +302,15 @@ export function BookingForm() {
                                                                 onClick={() => handleCategorySelect(category)}
                                                             >
                                                                 <div className="flex flex-col items-start text-left text-[0.785rem] sm:text-sm text-[#D8D8DF]">
-                                                                    <p>
-                                                                        {convertKebabAndSnakeToTitleCase(category.category_name)}
-                                                                    </p>
-                                                                    <p className="text-white font-semibold">£{category.category_cost}
-                                                                    </p>
+                                                                    <p>{convertKebabAndSnakeToTitleCase(category.category_name)}</p>
+                                                                    <p className="text-white font-semibold">£{category.category_cost}</p>
                                                                 </div>
 
                                                                 <div className="flex shrink-0 items-center justify-center h-5 w-5 border border-white rounded-full">
                                                                     {isSelected && <span className="h-3 w-3 bg-white rounded-full"></span>}
                                                                 </div>
                                                             </button>
-                                                            {isSelected &&
-                                                                category.sub_category_packages &&
-                                                                category.sub_category_packages.length > 0 && (
-                                                                    <div className="pl-4 pb-4">
-                                                                        <p className="text-sm text-[#D8D8DF] mb-2">Select a package:</p>
-                                                                        {category.sub_category_packages.map((subPackage) => (
-                                                                            <button
-                                                                                key={subPackage.id}
-                                                                                type="button"
-                                                                                className="flex items-center justify-between w-full p-2 text-sm text-[#D8D8DF] hover:bg-[#2A2A2A] rounded"
-                                                                                onClick={() => handleSubPackageSelect(category.id, subPackage)}
-                                                                            >
-                                                                                <span>{subPackage.package_name}</span>
-                                                                                <span>£{subPackage.package_cost}</span>
-                                                                            </button>
-                                                                        ))}
-                                                                    </div>
-                                                                )}
+
                                                         </div>
                                                     )
                                                 })}
@@ -343,8 +339,7 @@ export function BookingForm() {
                                                                 category_description: "",
                                                                 start_time: "",
                                                                 end_time: "",
-                                                                sub_category_packages: []
-
+                                                                sub_category_packages: [],
                                                             })
                                                         }
                                                     >
@@ -405,9 +400,9 @@ export function BookingForm() {
                 <DatePickerDialog
                     open={!!datePickerService}
                     onOpenChange={(open) => !open && setDatePickerService(null)}
-                    onSelect={(date, time) => {
+                    onSelect={(date) => {
                         if (datePickerService) {
-                            handleDateSelect(datePickerService, date, time)
+                            handleDateSelect(datePickerService, date)
                         }
                     }}
                     selectedDate={
@@ -415,7 +410,6 @@ export function BookingForm() {
                             ? new Date(selectedServices.find((s) => s.categoryId === datePickerService)!.date!)
                             : undefined
                     }
-                    selectedTime={selectedServices.find((s) => s.categoryId === datePickerService)?.time}
                     error={form.formState.errors.bookings?.message}
                 />
             )}

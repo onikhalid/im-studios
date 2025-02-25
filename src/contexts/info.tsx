@@ -99,7 +99,7 @@ interface About {
   image: null;
 }
 
-export interface Service {
+export type Service = {
   id: string;
   service_name: string;
   service_type: string;
@@ -109,7 +109,7 @@ export interface Service {
   categories: Category[];
 }
 
-export interface Category {
+export type Category = {
   id: string;
   category_name: string;
   category_description: string;
