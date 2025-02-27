@@ -328,6 +328,7 @@ export function BookingForm() {
                                                 <div className="flex items-center gap-4">
                                                     <Button
                                                         size="icon"
+                                                        type="button"
                                                         variant="ghost"
                                                         className="bg-[#FFFFFF33] rounded-full max-sm:h-6 max-sm:w-6 w-7 h-7 text-white hover:text-black"
                                                         onClick={() =>
@@ -337,6 +338,8 @@ export function BookingForm() {
                                                                 category_cost: Number.parseFloat(service.cost),
                                                                 category_hours: service.hours ?? 0,
                                                                 category_description: "",
+                                                                is_sub_category: !!service.subCategoryId,
+                                                                sub_category_id: service.subCategoryId,
                                                                 start_time: "",
                                                                 end_time: "",
                                                                 sub_category_packages: [],
