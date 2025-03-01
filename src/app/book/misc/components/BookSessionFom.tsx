@@ -44,7 +44,7 @@ export function BookingForm() {
         },
     })
     const {
-        formState: { errors },
+        formState,
         watch,
     } = form
 
@@ -272,9 +272,7 @@ export function BookingForm() {
                                                 <FormLabel>First name</FormLabel>
                                                 <FormControl>
                                                     <Input placeholder="Enter first name" {...field} className="border-[#484848]" />
-                                                    {
-                                                        !!errors.first_name && <FormMessage>{errors.first_name.message}</FormMessage>
-                                                    }
+                                                  
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -288,9 +286,7 @@ export function BookingForm() {
                                                 <FormLabel>Last name</FormLabel>
                                                 <FormControl>
                                                     <Input placeholder="Enter last name" {...field} className="border-[#484848]" />
-                                                    {
-                                                        !!errors.last_name && <FormMessage>{errors.last_name.message}</FormMessage>
-                                                    }
+                                                   
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -306,9 +302,7 @@ export function BookingForm() {
                                             <FormLabel>Active email address</FormLabel>
                                             <FormControl>
                                                 <Input placeholder="Enter email address" type="email" {...field} className="border-[#484848]" />
-                                                {
-                                                    !!errors.email && <FormMessage>{errors.email.message}</FormMessage>
-                                                }
+                                              
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
