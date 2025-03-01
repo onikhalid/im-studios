@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState, useEffect, useCallback } from "react"
+import { useMemo, useState, } from "react"
 import { useForm } from "react-hook-form"
 import { format } from "date-fns"
 import { CalendarIcon, X } from "lucide-react"
@@ -204,7 +204,7 @@ export function BookingForm() {
     )
 
     const { mutate: makeBooking, isPending } = useMakeBooking()
-    const { isErrorModalOpen, closeErrorModal, openErrorModal, errorModalMessage, openErrorModalWithMessage } =
+    const { isErrorModalOpen, closeErrorModal, errorModalMessage, openErrorModalWithMessage } =
         useErrorModalState()
     async function onSubmit(data: BookingFormValues) {
         if (selectedCategoriesAndSubCategories.some((s) => !s.date)) {
@@ -227,6 +227,7 @@ export function BookingForm() {
                 router.push(data.checkout_url)
             },
             onError(error) {
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 openErrorModalWithMessage((error as any)?.response?.data?.message || "Something went wrong")
             },
         })
@@ -271,6 +272,9 @@ export function BookingForm() {
                                                 <FormLabel>First name</FormLabel>
                                                 <FormControl>
                                                     <Input placeholder="Enter first name" {...field} className="border-[#484848]" />
+                                                    {
+                                                        !!errors.first_name && <FormMessage>{errors.first_name.message}</FormMessage>
+                                                    }
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -284,6 +288,9 @@ export function BookingForm() {
                                                 <FormLabel>Last name</FormLabel>
                                                 <FormControl>
                                                     <Input placeholder="Enter last name" {...field} className="border-[#484848]" />
+                                                    {
+                                                        !!errors.last_name && <FormMessage>{errors.last_name.message}</FormMessage>
+                                                    }
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -299,6 +306,9 @@ export function BookingForm() {
                                             <FormLabel>Active email address</FormLabel>
                                             <FormControl>
                                                 <Input placeholder="Enter email address" type="email" {...field} className="border-[#484848]" />
+                                                {
+                                                    !!errors.email && <FormMessage>{errors.email.message}</FormMessage>
+                                                }
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -315,7 +325,7 @@ export function BookingForm() {
                                             <SelectValue placeholder="Select service" className="text-white" />
                                         </SelectTrigger>
                                         <SelectContent className="bg-[#161616] text-white border border-[#484848] rounded-xl">
-                                            {selecteableServices?.map((service, index) => (
+                                            {selecteableServices?.map((service) => (
                                                 <SelectItem key={service.id} value={service.id}>
                                                     {service.service_name}
                                                 </SelectItem>
@@ -354,7 +364,13 @@ export function BookingForm() {
                                         </div>
                                     )}
                                 </div>
-
+                                {
+                                    watch('bookings')?.length == 0 && (
+                                        <FormMessage>
+                                            Select at least one service to proceed
+                                        </FormMessage>
+                                    )
+                                }
                                 {selectedCategoriesAndSubCategories.length > 0 && (
                                     <div className="space-y-2 max-md:divide-y">
                                         {selectedCategoriesAndSubCategories.map((service, index) => (
@@ -416,7 +432,7 @@ export function BookingForm() {
                                     className="w-max !text-sm"
                                     variant="cta"
                                     size="cta"
-                                    disabled={!form.formState.isValid || selectedCategoriesAndSubCategories.length === 0 || isPending}
+                                    disabled={selectedCategoriesAndSubCategories.length === 0 || isPending}
                                 >
                                     Proceed - £{totalCost.toFixed(2)}
                                     {isPending && <Spinner size={18} />}
