@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo, useState, useEffect, useCallback } from "react"
 import { useForm } from "react-hook-form"
 import { format } from "date-fns"
 import { CalendarIcon, X } from "lucide-react"
@@ -16,10 +16,12 @@ import { bookingFormSchema, type BookingFormValues, type SelectedService } from 
 import { DatePickerDialog } from "./DatePickerDialog"
 import { useMakeBooking } from "../api/postMakeBooking"
 import { useRouter, useSearchParams } from "next/navigation"
+import useErrorModalState from "@/hooks/useErrorModalState"
+import { ErrorDialog } from "@/components/ui"
 
 type SelectebleCatgory = Category & {
-    is_sub_category?: boolean;
-    sub_category_id?: string;
+    is_sub_category?: boolean
+    sub_category_id?: string
 }
 
 export function BookingForm() {
@@ -30,7 +32,7 @@ export function BookingForm() {
 
     const [selectedServiceId, setSelectedServiceId] = useState<string | null>(serviceId)
     const [datePickerService, setDatePickerService] = useState<string | null>(null)
-    const [selectedServices, setSelectedServices] = useState<SelectedService[]>([])
+    const [selectedCategoriesAndSubCategories, setSelectedCategoriesAndSubCategories] = useState<SelectedService[]>([])
 
     const form = useForm<BookingFormValues>({
         resolver: zodResolver(bookingFormSchema),
@@ -48,34 +50,30 @@ export function BookingForm() {
     console.log(errors)
     console.log(watch(), "CAASD")
 
-    const handleServiceSelect = (serviceId: string) => {
-        setSelectedServiceId(serviceId)
-    }
-
     const handleCategorySelect = (category: SelectebleCatgory) => {
         const service = selecteableServices?.find((s) => s.id === selectedServiceId)
         if (!service) return
 
-        const exists = selectedServices.some((s) => {
-            if(s.subCategoryId){
+        const exists = selectedCategoriesAndSubCategories.some((s) => {
+            if (s.subCategoryId) {
                 return s.subCategoryId === category.sub_category_id
             }
-            else{
+            else {
                 return s.categoryId === category.id
             }
         })
 
         if (exists) {
-            setSelectedServices((prev) => prev.filter((s) =>{
-                if(s.subCategoryId){
+            setSelectedCategoriesAndSubCategories((prev) => prev.filter((s) => {
+                if (s.subCategoryId) {
                     return s.subCategoryId !== category.sub_category_id
                 }
-                else{
+                else {
                     return s.categoryId !== category.id
                 }
             }))
         } else {
-            setSelectedServices((prev) => [
+            setSelectedCategoriesAndSubCategories((prev) => [
                 ...prev,
                 {
                     serviceId: service.id,
@@ -96,7 +94,8 @@ export function BookingForm() {
         updateFormBookings()
     }
 
-    type SelectableService = Omit<Service, 'categories'> & {
+
+    type SelectableService = Omit<Service, "categories"> & {
         categories: SelectebleCatgory[]
     }
     const selecteableServices: SelectableService[] = useMemo(() => {
@@ -122,28 +121,51 @@ export function BookingForm() {
                             end_time: null,
                             is_sub_category: true,
                             sub_category_id: subPackage.id,
-                            sub_category_packages: []
+                            sub_category_packages: [],
                         })
                     })
                 })
                 new_services.push({
                     ...service,
-
                     categories: [
                         ...new_categories,
                         ...service.categories.filter((category) => !category.sub_category_packages?.length),
                     ],
                 })
-            } else new_services.push({ ...service, categories: service.categories.map((category) => ({ ...category, is_sub_category: false, sub_category_id: '0' })) })
+            } else {
+                new_services.push({
+                    ...service,
+                    categories: service.categories.map((category) => ({
+                        ...category,
+                        is_sub_category: false,
+                        sub_category_id: "0",
+                    })),
+                })
+            }
         })
 
         return new_services
     }, [appInfo])
 
+    console.log(selecteableServices, "selecteableServices")
 
+    const filteredSelecteableServices = useMemo(() => {
+        if (!selectedServiceId) return {} as SelectableService
+
+        // Find the currently selected service
+        const selectedService = selecteableServices.find((service) => service.id === selectedServiceId)
+
+        if (!selectedService) return {} as SelectableService
+
+        // Return a clean copy to ensure we don't have any reference issues
+        return {
+            ...selectedService,
+            categories: selectedService.categories.map((category) => ({ ...category })),
+        }
+    }, [selectedServiceId, selecteableServices])
 
     const handleDateSelect = (serviceId: string, date: Date) => {
-        setSelectedServices((prev) =>
+        setSelectedCategoriesAndSubCategories((prev) =>
             prev.map((service) =>
                 service.categoryId === serviceId
                     ? {
@@ -154,7 +176,7 @@ export function BookingForm() {
             ),
         )
 
-        const updatedBookings = selectedServices.map((service) => ({
+        const updatedBookings = selectedCategoriesAndSubCategories.map((service) => ({
             service_category: service.categoryId,
             sub_category_package: service.sub_category_packages,
             book_date: service.categoryId === serviceId ? format(date, "yyyy-MM-dd") : service.date || "",
@@ -168,7 +190,7 @@ export function BookingForm() {
     }
 
     const updateFormBookings = () => {
-        const bookings = selectedServices
+        const bookings = selectedCategoriesAndSubCategories
             .filter((service) => service.date)
             .map((service) => ({
                 service_category: service.categoryId,
@@ -179,21 +201,25 @@ export function BookingForm() {
         form.setValue("bookings", bookings)
     }
 
-    const totalCost = selectedServices.reduce((acc, service) => acc + Number.parseFloat(service.cost), 0)
+    const totalCost = selectedCategoriesAndSubCategories.reduce(
+        (acc, service) => acc + Number.parseFloat(service.cost),
+        0,
+    )
 
     const { mutate: makeBooking, isPending } = useMakeBooking()
-
+    const { isErrorModalOpen, closeErrorModal, openErrorModal, errorModalMessage, openErrorModalWithMessage } =
+        useErrorModalState()
     async function onSubmit(data: BookingFormValues) {
-        if (selectedServices.some((s) => !s.date)) {
+        if (selectedCategoriesAndSubCategories.some((s) => !s.date)) {
             alert("Please select a date for all selected services")
             return
         }
 
         const payload = {
             ...data,
-            bookings: selectedServices.map((service) => ({
+            bookings: selectedCategoriesAndSubCategories.map((service) => ({
                 service_category: service.categoryId,
-                sub_category_package: service.subCategoryId,
+                sub_category_package: service.subCategoryId !== "0" ? service.subCategoryId : null,
                 book_date: service.date!,
                 quantity: 1,
             })),
@@ -203,8 +229,23 @@ export function BookingForm() {
             onSuccess(data) {
                 router.push(data.checkout_url)
             },
+            onError(error, variables, context) {
+                console.log(error, "ERRAR")
+            },
         })
     }
+
+    // Add this function to debug the state
+    const logSelectedCategories = useCallback(() => {
+        console.log("Current selected service:", selectedServiceId)
+        console.log("Selected categories:", selectedCategoriesAndSubCategories)
+        console.log("Filtered categories:", filteredSelecteableServices?.categories)
+    }, [selectedServiceId, selectedCategoriesAndSubCategories, filteredSelecteableServices])
+
+    // Add this useEffect to log state changes
+    useEffect(() => {
+        logSelectedCategories()
+    }, [logSelectedCategories])
 
     return (
         <>
@@ -271,12 +312,15 @@ export function BookingForm() {
 
                                 <div className="space-y-2">
                                     <FormLabel>Which of our services would you like to book?</FormLabel>
-                                    <Select onValueChange={handleServiceSelect} value={selectedServiceId || undefined}>
+                                    <Select
+                                        onValueChange={(serviceId) => setSelectedServiceId(serviceId)}
+                                        value={selectedServiceId || undefined}
+                                    >
                                         <SelectTrigger className="border-[#484848] h-14 text-white">
                                             <SelectValue placeholder="Select service" className="text-white" />
                                         </SelectTrigger>
                                         <SelectContent className="bg-[#161616] text-white border border-[#484848] rounded-xl">
-                                            {selecteableServices?.map((service) => (
+                                            {selecteableServices?.map((service, index) => (
                                                 <SelectItem key={service.id} value={service.id}>
                                                     {service.service_name}
                                                 </SelectItem>
@@ -284,43 +328,41 @@ export function BookingForm() {
                                         </SelectContent>
                                     </Select>
 
-                                    {selectedServiceId && (
+                                    {selectedServiceId && filteredSelecteableServices.categories && (
                                         <div className="flex flex-col bg-[#161616] rounded-xl border border-[#484848] divide-y divide-[#373737] px-2">
-                                            {selecteableServices
-                                                ?.find((s) => s.id === selectedServiceId)
-                                                ?.categories.map((category) => {
-                                                    const isSelected = selectedServices.some((s) =>
-                                                        s.subCategoryId ?
-                                                            s.subCategoryId === category.sub_category_id :
-                                                            s.categoryId === category.id
-                                                    )
-                                                    return (
-                                                        <div key={category.id}>
-                                                            <button
-                                                                type="button"
-                                                                className="flex items-start justify-between h-auto p-4 w-full"
-                                                                onClick={() => handleCategorySelect(category)}
-                                                            >
-                                                                <div className="flex flex-col items-start text-left text-[0.785rem] sm:text-sm text-[#D8D8DF]">
-                                                                    <p>{convertKebabAndSnakeToTitleCase(category.category_name)}</p>
-                                                                    <p className="text-white font-semibold">£{category.category_cost}</p>
-                                                                </div>
+                                            {filteredSelecteableServices.categories.map((category, index) => {
+                                                const isSelected = selectedServices.some((s) =>
+                                                    s.subCategoryId ?
+                                                        s.subCategoryId === category.sub_category_id :
+                                                        s.categoryId === category.id
+                                                )
 
-                                                                <div className="flex shrink-0 items-center justify-center h-5 w-5 border border-white rounded-full">
-                                                                    {isSelected && <span className="h-3 w-3 bg-white rounded-full"></span>}
-                                                                </div>
-                                                            </button>
+                                                return (
+                                                    <div key={category.id + index}>
+                                                        <button
+                                                            type="button"
+                                                            className="flex items-start justify-between h-auto p-4 w-full"
+                                                            onClick={() => handleCategorySelect(category)}
+                                                        >
+                                                            <div className="flex flex-col items-start text-left text-[0.785rem] sm:text-sm text-[#D8D8DF]">
+                                                                <p>{convertKebabAndSnakeToTitleCase(category.category_name)}</p>
+                                                                <p className="text-white font-semibold">£{category.category_cost}</p>
+                                                            </div>
 
-                                                        </div>
-                                                    )
-                                                })}
+                                                            <div className="flex shrink-0 items-center justify-center h-5 w-5 border border-white rounded-full">
+                                                                {isSelected && <span className="h-3 w-3 bg-white rounded-full"></span>}
+                                                            </div>
+                                                        </button>
+                                                    </div>
+                                                )
+                                            })}
                                         </div>
                                     )}
                                 </div>
 
-                                {selectedServices.length > 0 && (
+                                {selectedCategoriesAndSubCategories.length > 0 && (
                                     <div className="space-y-2 max-md:divide-y">
-                                        {selectedServices.map((service, index) => (
+                                        {selectedCategoriesAndSubCategories.map((service, index) => (
                                             <div
                                                 key={index}
                                                 className="flex max-md:flex-col items-start md:items-center gap-4 p-3 50 rounded-lg"
@@ -340,8 +382,8 @@ export function BookingForm() {
                                                                 category_description: "",
                                                                 is_sub_category: !!service.subCategoryId,
                                                                 sub_category_id: service.subCategoryId,
-                                                                start_time: "",
-                                                                end_time: "",
+                                                                start_time: null,
+                                                                end_time: null,
                                                                 sub_category_packages: [],
                                                             })
                                                         }
@@ -379,7 +421,7 @@ export function BookingForm() {
                                     className="w-max !text-sm"
                                     variant="cta"
                                     size="cta"
-                                    disabled={!form.formState.isValid || selectedServices.length === 0 || isPending}
+                                    disabled={!form.formState.isValid || selectedCategoriesAndSubCategories.length === 0 || isPending}
                                 >
                                     Proceed - £{totalCost.toFixed(2)}
                                     {isPending && <Spinner size={18} />}
@@ -390,7 +432,7 @@ export function BookingForm() {
                                         {form.formState.errors.bookings.message}
                                     </p>
                                 )}
-                                {selectedServices.length > 0 && (
+                                {selectedCategoriesAndSubCategories.length > 0 && (
                                     <p className="flex text-left text-[0.8rem] text-emerald-500">Payment validates booking</p>
                                 )}
                             </form>
@@ -409,13 +451,21 @@ export function BookingForm() {
                         }
                     }}
                     selectedDate={
-                        datePickerService && selectedServices.find((s) => s.categoryId === datePickerService)?.date
-                            ? new Date(selectedServices.find((s) => s.categoryId === datePickerService)!.date!)
+                        datePickerService &&
+                            selectedCategoriesAndSubCategories.find((s) => s.categoryId === datePickerService)?.date
+                            ? new Date(selectedCategoriesAndSubCategories.find((s) => s.categoryId === datePickerService)!.date!)
                             : undefined
                     }
                     error={form.formState.errors.bookings?.message}
                 />
             )}
+
+            <ErrorDialog
+                title="SOMETHING WENT WRONG"
+                description={errorModalMessage}
+                isErrorDialogOpen={isErrorModalOpen}
+                closeErrorDialog={closeErrorModal}
+            />
         </>
     )
 }

@@ -1,5 +1,4 @@
 import { BookingAppAxios } from "@/utils/axios"
-// import { BookingFormValues } from "../lib/schema"
 import { useMutation } from "@tanstack/react-query"
 type payload ={
     bookings: {
