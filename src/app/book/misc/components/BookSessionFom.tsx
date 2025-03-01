@@ -47,8 +47,6 @@ export function BookingForm() {
         formState: { errors },
         watch,
     } = form
-    console.log(errors)
-    console.log(watch(), "CAASD")
 
     const handleCategorySelect = (category: SelectebleCatgory) => {
         const service = selecteableServices?.find((s) => s.id === selectedServiceId)
@@ -147,7 +145,6 @@ export function BookingForm() {
         return new_services
     }, [appInfo])
 
-    console.log(selecteableServices, "selecteableServices")
 
     const filteredSelecteableServices = useMemo(() => {
         if (!selectedServiceId) return {} as SelectableService
@@ -224,29 +221,26 @@ export function BookingForm() {
                 quantity: 1,
             })),
         }
-        console.log(payload)
+        // console.log(payload)
         makeBooking(payload, {
             onSuccess(data) {
                 router.push(data.checkout_url)
             },
             onError(error) {
-                console.log(error, "ERRAR")
                 openErrorModalWithMessage((error as any)?.response?.data?.message || "Something went wrong")
             },
         })
     }
 
-    // Add this function to debug the state
-    const logSelectedCategories = useCallback(() => {
-        console.log("Current selected service:", selectedServiceId)
-        console.log("Selected categories:", selectedCategoriesAndSubCategories)
-        console.log("Filtered categories:", filteredSelecteableServices?.categories)
-    }, [selectedServiceId, selectedCategoriesAndSubCategories, filteredSelecteableServices])
+    // const logSelectedCategories = useCallback(() => {
+    //     console.log("Current selected service:", selectedServiceId)
+    //     console.log("Selected categories:", selectedCategoriesAndSubCategories)
+    //     console.log("Filtered categories:", filteredSelecteableServices?.categories)
+    // }, [selectedServiceId, selectedCategoriesAndSubCategories, filteredSelecteableServices])
 
-    // Add this useEffect to log state changes
-    useEffect(() => {
-        logSelectedCategories()
-    }, [logSelectedCategories])
+    // useEffect(() => {
+    //     logSelectedCategories()
+    // }, [logSelectedCategories])
 
     return (
         <>
