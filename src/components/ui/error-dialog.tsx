@@ -7,7 +7,6 @@ import {
     AlertDialogFooter,
     AlertDialogHeader,
     AlertDialogTitle,
-    AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
 type ErrorDialogProps = {
@@ -20,7 +19,6 @@ type ErrorDialogProps = {
 const ErrorDialog = ({ title, description, isErrorDialogOpen, closeErrorDialog, continueAction }: ErrorDialogProps) => {
     return (
         <AlertDialog open={isErrorDialogOpen}>
-            <AlertDialogTrigger>Open</AlertDialogTrigger>
             <AlertDialogContent>
                 <AlertDialogHeader>
                     <AlertDialogTitle>{title}</AlertDialogTitle>

@@ -30,6 +30,7 @@ export interface SelectedService {
   hours: number
   date?: string
   time?: string
+  quantity: number
 }
 
 
