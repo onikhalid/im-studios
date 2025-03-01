@@ -229,8 +229,9 @@ export function BookingForm() {
             onSuccess(data) {
                 router.push(data.checkout_url)
             },
-            onError(error, variables, context) {
+            onError(error) {
                 console.log(error, "ERRAR")
+                openErrorModalWithMessage((error as any)?.response?.data?.message || "Something went wrong")
             },
         })
     }
@@ -331,7 +332,7 @@ export function BookingForm() {
                                     {selectedServiceId && filteredSelecteableServices.categories && (
                                         <div className="flex flex-col bg-[#161616] rounded-xl border border-[#484848] divide-y divide-[#373737] px-2">
                                             {filteredSelecteableServices.categories.map((category, index) => {
-                                                const isSelected = selectedServices.some((s) =>
+                                                const isSelected = selectedCategoriesAndSubCategories.some((s) =>
                                                     s.subCategoryId ?
                                                         s.subCategoryId === category.sub_category_id :
                                                         s.categoryId === category.id

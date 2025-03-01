@@ -15,8 +15,9 @@ type ErrorDialogProps = {
     description: string
     isErrorDialogOpen: boolean
     closeErrorDialog: () => void
+    continueAction?: () => void
 }
-const ErrorDialog = ({ title, description, isErrorDialogOpen, closeErrorDialog }: ErrorDialogProps) => {
+const ErrorDialog = ({ title, description, isErrorDialogOpen, closeErrorDialog, continueAction }: ErrorDialogProps) => {
     return (
         <AlertDialog open={isErrorDialogOpen}>
             <AlertDialogTrigger>Open</AlertDialogTrigger>
@@ -28,8 +29,8 @@ const ErrorDialog = ({ title, description, isErrorDialogOpen, closeErrorDialog }
                     </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <AlertDialogAction>Continue</AlertDialogAction>
+                    <AlertDialogCancel onClick={closeErrorDialog}>Cancel</AlertDialogCancel>
+                    <AlertDialogAction onClick={continueAction ?? closeErrorDialog}>Continue</AlertDialogAction>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>
