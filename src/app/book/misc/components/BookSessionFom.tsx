@@ -475,7 +475,7 @@ export function BookingForm() {
                 </Button>
 
                 {selectedCategoriesAndSubCategories.length > 0 && (
-                  <p className="flex text-left text-[0.8rem] text-emerald-500">Payment validates booking</p>
+                  <p className="flex text-left text-[0.7rem] md:text-[0.8rem] text-emerald-500">Payment validates booking</p>
                 )}
               </form>
             </Form>
