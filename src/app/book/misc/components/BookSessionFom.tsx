@@ -394,6 +394,7 @@ export function BookingForm() {
                     </div>
                   )}
                 </div>
+                
                 {selectedCategoriesAndSubCategories.length == 0 && (
                   <p className="text-[0.8rem] font-medium bg-destructive/30 text-destructive px-3 py-1.5 rounded-md">
                     Select at least one service to proceed
