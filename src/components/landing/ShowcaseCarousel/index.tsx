@@ -62,7 +62,7 @@ const ShowcaseCarousel = () => {
                     transition={{ duration: 0.5 }}
                     className=""
                 >
-                    <article className='grid lg:grid-cols-2 px-5'>
+                    <article className='grid lg:grid-cols-2 px-5 max-w-[1400px] mx-auto'>
                         <div className='flex flex-col justify-center items-center'>
                             <h1 className="font-poppins font-semibold w-full md:max-w-[600px] mb-6 !leading-[4rem] text-balance">
                                 <BackgroundPerLine
