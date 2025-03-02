@@ -412,7 +412,7 @@ export function BookingForm() {
                             size="icon"
                             type="button"
                             variant="ghost"
-                            className="bg-[#FFFFFF33] rounded-full max-sm:h-6 max-sm:w-6 w-7 h-7 text-white hover:text-black shrink-0"
+                            className="bg-[#FFFFFF33] rounded-full h-6 w-6 text-white hover:text-black shrink-0"
                             onClick={() =>
                               handleCategorySelect({
                                 id: service.categoryId,
@@ -435,10 +435,10 @@ export function BookingForm() {
                             min="1"
                             value={service.quantity || 1}
                             onChange={(e) => handleQuantityChange(service.categoryId, Number(e.target.value))}
-                            className="w-24 h-10 md:h-12 text-white bg-[#000000] border-[#484848] rounded-lg"
+                            className="min-w-16 shrink max-w-24 h-10 !text-xs px-3 py-1 text-white bg-[#000000] border-[#484848] rounded-lg !appearance-none"
                           />
                           <div className="flex-1 flex items-center">
-                            <h4 className="font-medium text-white text-[0.825rem] md:text-[0.9rem]">
+                            <h4 className="font-medium text-white text-[0.8rem] md:text-[0.84rem]">
                               {convertKebabAndSnakeToTitleCase(service.categoryName)}
                             </h4>
                           </div>
@@ -447,13 +447,13 @@ export function BookingForm() {
                           <Button
                             variant="outline"
                             type="button"
-                            className="w-[120px] text-[0.8rem] !h-8 sm:!h-9  sm:!px-4 text-left font-normal "
+                            className="w-[100px] text-[0.7rem] !h-8 sm:!px-2.5 text-left font-normal "
                             onClick={() => setDatePickerService(service.categoryId)}
                           >
                             {service.date ? format(new Date(service.date), "MMM dd") : "Pick a date"}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                           </Button>
-                          <p className="text-[0.9rem] text-white shrink-0">
+                          <p className="text-[0.85rem] text-white shrink-0">
                             Cost:
                             <span className="font-semibold">£{service.cost}</span>
                           </p>
