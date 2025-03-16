@@ -30,18 +30,19 @@ export default function Testimonials() {
         <section className="flex flex-col justify-center bg-[#0E0E0E] text-white py-24 md:py-32 h-full">
             <div className="container mx-auto px-1.5 md:px-4">
                 <div className="flex flex-col items-center max-w-4xl mx-auto">
-                    {/* <motion.h2
-                        className="text-5xl md:text-7xl xl:text-8xl font-bold mb-16 font-heaters"
+                    <motion.h2
+                        className="text-5xl md:text-7xl xl:text-8xl font-bold mb-16"
                         initial={{ opacity: 0.2, y: -50 }}
-                        animate={{ opacity: 0.2, y: 0 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 50 }}
                         transition={{ duration: 0.5 }}
                     >
                         TESTIMONIALS
-                    </motion.h2> */}
+                    </motion.h2>
 
-                    <ShadowText
+                    {/* <ShadowText
                         text="TESTIMONIALS"
-                    />
+                    /> */}
                     <div className="relative w-full">
                         {/* Navigation */}
                         <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 flex justify-between pointer-events-none z-10">

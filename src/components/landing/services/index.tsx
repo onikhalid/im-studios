@@ -34,9 +34,18 @@ export function ServicesSection() {
     <section className="relative lg:min-h-screen lg:h-max bg-black py-20">
       <div className="w-[95vw] max-w-[1440px] mx-auto px-4">
         <div className="text-center mb-16 lg:hidden">
-          <ShadowText
+          <motion.h2
+            className="text-5xl md:text-7xl xl:text-8xl font-bold mb-6"
+            initial={{ opacity: 0.2, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.5 }}
+          >
+            TESTIMONIALS
+          </motion.h2>
+          {/* <ShadowText
             text="OUR SERVICES"
-          />
+          /> */}
           <LinkButton
             href="/services"
             variant="outline"
@@ -56,10 +65,19 @@ export function ServicesSection() {
 
           {/* Desktop Circular Layout */}
           <div className="hidden lg:flex items-center md:justify-center relative h-[1400px] w-full mx-auto">
-            <div className="text-center mb-16">
-              <ShadowText
+            <div className="text-center mb-6">
+              <motion.h2
+                className="text-5xl md:text-7xl xl:text-8xl font-bold mb-6 text-white"
+                initial={{ opacity: 0.2, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                transition={{ duration: 0.5 }}
+              >
+                SERVICES
+              </motion.h2>
+              {/* <ShadowText
                 text="OUR SERVICES"
-              />
+              /> */}
               <LinkButton
                 href="/services"
                 variant="outline"

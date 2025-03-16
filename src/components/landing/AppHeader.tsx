@@ -3,6 +3,7 @@ import Link from "next/link"
 import { LinkButton } from "../ui"
 import { cn } from "@/lib/utils"
 import { usePathname } from "next/navigation"
+import Image from "next/image"
 
 export default function AppHeader() {
     const pathName = usePathname()
@@ -27,9 +28,10 @@ export default function AppHeader() {
 
     return (
         <header className="fixed top-0 left-0 right-0 z-50 b backdrop-blur-sm">
-            <div className="w-[90%] md:w-[95%] max-w-[1920px] mx-auto px-4 h-20 ">
+            <div className="w-[90%] md:w-[95%] max-w-[1920px] mx-auto md:px-4 h-20 ">
                 <div className="flex items-center justify-between h-full">
-                    <Link href="/" className="text-white font-mono text-xl">
+                    <Link href="/" className="flex items-center text-white font-mono text-xl">
+                        <Image src="/im-logo.jpg" width={70} height={70} alt="logo" />
                         IM STUDIOZ
                     </Link>
                     <nav className="hidden md:flex items-center space-x-12">

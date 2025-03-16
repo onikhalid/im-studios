@@ -162,9 +162,9 @@ export function BookingForm() {
       prev.map((service) =>
         service.categoryId === serviceId
           ? {
-              ...service,
-              date: format(date, "yyyy-MM-dd"),
-            }
+            ...service,
+            date: format(date, "yyyy-MM-dd"),
+          }
           : service,
       ),
     )
@@ -182,17 +182,27 @@ export function BookingForm() {
     })
   }
 
-  const handleQuantityChange = (serviceId: string, quantity: number) => {
+  const handleQuantityChange = (serviceId: string, is_sub_category: boolean, sub_category_id: string, quantity: number) => {
     // Update the selected categories state
     setSelectedCategoriesAndSubCategories((prev) =>
-      prev.map((service) =>
-        service.categoryId === serviceId
-          ? {
+      prev.map((service) =>{
+        if(is_sub_category){
+          return service.categoryId === serviceId && service.subCategoryId === sub_category_id
+            ? {
               ...service,
               quantity,
             }
-          : service,
-      ),
+            : service
+        }
+        else{
+          return service.categoryId === serviceId
+            ? {
+              ...service,
+              quantity,
+            }
+            : service
+        }
+      }),
     )
 
     // Update the form bookings with all current selections
@@ -365,7 +375,7 @@ export function BookingForm() {
                               className="flex items-start justify-between h-auto p-4 w-full"
                               onClick={() => handleCategorySelect(category)}
                             >
-                              <div className="flex flex-col items-start text-left text-[0.785rem] sm:text-sm text-[#D8D8DF]">
+                              <div className="flex flex-col items-start text-left text-[0.825rem] sm:text-sm text-white">
                                 <p className="">
                                   {convertKebabAndSnakeToTitleCase(category.category_name)}
                                   <span className="inline-flex items-center justify-center h-[1lh] ml-1 mt-0.5">
@@ -378,7 +388,7 @@ export function BookingForm() {
                                     </InfoToolTip>
                                   </span>
                                 </p>
-                                <span className="italic text-[0.67rem] text-white/60">
+                                <span className=" text-[0.785rem] text-white/70">
                                   {category.category_description}
                                 </span>
                                 <p className="text-white font-semibold">£{category.category_cost}</p>
@@ -401,63 +411,74 @@ export function BookingForm() {
                   </p>
                 )}
                 {selectedCategoriesAndSubCategories.length > 0 && (
-                  <div className="space-y-2 max-md:divide-y">
+                  <div className="space-y-2 max-md:space-y-4">
                     {selectedCategoriesAndSubCategories.map((service, index) => (
-                      <div
-                        key={index}
-                        className="flex max-md:flex-col items-start md:items-center gap-4 p-3 50 rounded-lg"
-                      >
-                        <div className="flex items-center gap-4">
-                          <Button
-                            size="icon"
-                            type="button"
-                            variant="ghost"
-                            className="bg-[#FFFFFF33] rounded-full h-6 w-6 text-white hover:text-black shrink-0"
-                            onClick={() =>
-                              handleCategorySelect({
-                                id: service.categoryId,
-                                category_name: service.categoryName,
-                                category_cost: Number.parseFloat(service.cost),
-                                category_hours: service.hours ?? 0,
-                                category_description: "",
-                                is_sub_category: !!service.subCategoryId,
-                                sub_category_id: service.subCategoryId,
-                                start_time: null,
-                                end_time: null,
-                                sub_category_packages: [],
-                              })
-                            }
-                          >
-                            <X className="h-4 w-4 text-inherit" />
-                          </Button>
-                          <Input
-                            type="number"
-                            min="1"
-                            value={service.quantity || 1}
-                            onChange={(e) => handleQuantityChange(service.categoryId, Number(e.target.value))}
-                            className="min-w-16 shrink max-w-24 h-10 !text-xs px-3 py-1 text-white bg-[#000000] border-[#484848] rounded-lg !appearance-none"
-                          />
-                          <div className="flex-1 flex items-center">
-                            <h4 className="font-medium text-white text-[0.8rem] md:text-[0.84rem]">
-                              {convertKebabAndSnakeToTitleCase(service.categoryName)}
-                            </h4>
+                      <div className="w-full" key={index}>
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 p-3 border border-[#484848] rounded-xl bg-black/20">
+                          {/* Service info and remove button */}
+                          <div className="flex items-center gap-3 w-full sm:w-auto">
+                            <Button
+                              size="icon"
+                              type="button"
+                              variant="ghost"
+                              className="bg-[#FFFFFF33] rounded-full h-6 w-6 text-white hover:text-black shrink-0"
+                              onClick={() =>
+                                handleCategorySelect({
+                                  id: service.categoryId,
+                                  category_name: service.categoryName,
+                                  category_cost: Number.parseFloat(service.cost),
+                                  category_hours: service.hours ?? 0,
+                                  category_description: "",
+                                  is_sub_category: service.subCategoryId !== "0",
+                                  sub_category_id: service.subCategoryId,
+                                  start_time: null,
+                                  end_time: null,
+                                  sub_category_packages: [],
+                                })
+                              }
+                            >
+                              <X className="h-4 w-4 text-inherit" />
+                            </Button>
+
+                            <Input
+                              type="number"
+                              min="1"
+                              value={service.quantity || 1}
+                              onChange={(e) => handleQuantityChange(service.categoryId, service.subCategoryId !== "0", service.subCategoryId!, Number(e.target.value))}
+                              className="w-16 h-8 !text-xs px-3 py-1 text-white bg-[#000000] border-[#484848] rounded-lg !appearance-none"
+                            />
+
+                            <div className="font-medium text-white text-sm w-full max-w-[180px] md:max-w-[150px] sm:max-w-none">
+                              <h4 className="truncate">
+
+                                {convertKebabAndSnakeToTitleCase(service.categoryName)}
+                              </h4>
+                            </div>
+                          </div>
+
+                          {/* Date picker and cost */}
+                          <div className="flex items-center gap-3 mt-2 sm:mt-0 sm:ml-auto w-full sm:w-auto justify-between sm:justify-start">
+                            <Button
+                              variant="outline"
+                              type="button"
+                              className="text-xs h-8 px-2 font-normal flex-shrink-0 w-[100px]"
+                              onClick={() => setDatePickerService(service.categoryId)}
+                            >
+                              <span className="truncate">{service.date ? format(new Date(service.date), "MMM dd") : "Pick a date"}</span>
+                              <CalendarIcon className="ml-auto h-4 w-4 opacity-50 flex-shrink-0" />
+                            </Button>
+
+                            <p className="text-sm text-white whitespace-nowrap">
+                              Cost: <span className="font-semibold">£{service.cost}</span>
+                            </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-4 ml-auto shrink-0">
-                          <Button
-                            variant="outline"
-                            type="button"
-                            className="w-[100px] text-[0.7rem] !h-8 sm:!px-2.5 text-left font-normal "
-                            onClick={() => setDatePickerService(service.categoryId)}
-                          >
-                            {service.date ? format(new Date(service.date), "MMM dd") : "Pick a date"}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
-                          </Button>
-                          <p className="text-[0.85rem] text-white shrink-0">
-                            Cost:
-                            <span className="font-semibold">£{service.cost}</span>
+
+                        {!service.date && (
+                          <p className="text-xs font-medium bg-destructive/30 text-destructive px-3 py-1.5 rounded-md mt-1">
+                            Select a date for this service
                           </p>
-                        </div>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -494,7 +515,7 @@ export function BookingForm() {
           }}
           selectedDate={
             datePickerService &&
-            selectedCategoriesAndSubCategories.find((s) => s.categoryId === datePickerService)?.date
+              selectedCategoriesAndSubCategories.find((s) => s.categoryId === datePickerService)?.date
               ? new Date(selectedCategoriesAndSubCategories.find((s) => s.categoryId === datePickerService)!.date!)
               : undefined
           }

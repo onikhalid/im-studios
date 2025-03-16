@@ -5,6 +5,7 @@ import { Facebook, Instagram, Linkedin, Send, Twitter, } from 'lucide-react'
 import { useAppInfo } from "@/contexts/info"
 import FooterSkeleton from "./FooterSkeleton"
 import { Whatsapp } from 'iconsax-react'
+import Image from "next/image"
 
 
 export default function Footer() {
@@ -19,8 +20,8 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center space-y-12">
           {/* Logo */}
-          <Link
-            href="/" className="text-4xl md:text-5xl font-mono">
+          <Link href="/" className="flex items-center text-4xl md:text-5xl font-mono">
+            <Image src="/im-logo.jpg" width={70} height={70} alt="logo" />
             IM STUDIOZ
           </Link>
 
