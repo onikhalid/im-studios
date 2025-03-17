@@ -44,7 +44,6 @@ export function BookingForm() {
     },
   })
   // const { formState, watch, register } = form
-
   const handleCategorySelect = (category: SelectebleCatgory) => {
     const service = selecteableServices?.find((s) => s.id === selectedServiceId)
     if (!service) return
