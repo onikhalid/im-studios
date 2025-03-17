@@ -11,7 +11,6 @@ import { useAppInfo } from "@/contexts/info"
 export default function Testimonials() {
 
     const { appInfo } = useAppInfo()
-
     const [currentIndex, setCurrentIndex] = useState(0)
 
     const next = () => {
