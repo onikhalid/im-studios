@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { MoveLeft, MoveRight } from 'lucide-react'
-import { LinkButton, ShadowText } from "../ui"
+import { LinkButton } from "../ui"
 import { useAppInfo } from "@/contexts/info"
 
 

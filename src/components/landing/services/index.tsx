@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { ServiceCard } from "./ServiceCard"
 import { useAppInfo } from "@/contexts/info"
 import { useWindowWidth } from "@/hooks/useWindowWidth"
-import { LinkButton, ShadowText } from "@/components/ui"
+import { LinkButton } from "@/components/ui"
 
 
 
