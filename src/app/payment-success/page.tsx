@@ -18,10 +18,8 @@ const PaymentSuccessPage = () => {
             <section className="flex flex-col pt-12 leading-tight 2xl:h-screen 2xl:max-h-full 2xl:w-2/5 overflow-hidden lg:sticky top-0 2xl:justify-center items-center p-6">
                 <MoneyTick className="text-white/80 size-28 lg:size-40" />
 
-                <p className="text-[6rem] lg:text-[10rem] leading-none font-bebas text-[#FFFFFF21]">
+                <p className="text-[6rem] lg:text-[6.5rem] leading-none font-poppins text-white -translate-y-[30%] lg:-translate-y-[50%]">
                     PAYMENT
-                </p>
-                <p className="text-[6rem] lg:text-[8rem] leading-none font-bebas text-white -translate-y-[30%] lg:-translate-y-[50%]">
                     SUCCESSFUL
                 </p>
             </section>

@@ -73,6 +73,9 @@ interface Teammember {
   x_link: string | null;
 }
 
+
+
+
 interface Footer {
   id: string;
   whatsapp_url: string;
@@ -81,14 +84,15 @@ interface Footer {
   copyright_text: string;
   contact_phone_number: string;
   whatsapp_phone_number: string;
-  x_link: string | null;
+  x_link: string;
   linkedin_link: string;
   instagram_link: string;
-  facebook_link: string | null;
+  facebook_link: string;
   contact_email: string;
-  telegram_link: string | null;
+  telegram_link: null;
   mission_statement: string;
 }
+
 
 interface About {
   id: string;

@@ -1,10 +1,10 @@
 'use client'
 
 import Link from "next/link"
-import { Facebook, Instagram, Linkedin, Send, Twitter, } from 'lucide-react'
+import { Facebook, Instagram, Linkedin, Twitter, } from 'lucide-react'
 import { useAppInfo } from "@/contexts/info"
 import FooterSkeleton from "./FooterSkeleton"
-import { Whatsapp } from 'iconsax-react'
+import { Whatsapp, Youtube } from 'iconsax-react'
 import Image from "next/image"
 
 
@@ -20,8 +20,8 @@ export default function Footer() {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center space-y-12">
           {/* Logo */}
-          <Link href="/" className="flex items-center text-4xl md:text-5xl font-mono">
-            <Image src="/im-logo.jpg" width={70} height={70} alt="logo" />
+          <Link href="/" className="flex flex-col items-center text-lg md:text-lg font-mono">
+            <Image src="/im-logo.jpg" width={80} height={80} alt="logo" />
             IM STUDIOZ
           </Link>
 
@@ -41,15 +41,15 @@ export default function Footer() {
                 target="_blank"
                 href={appInfo?.footer?.telegram_link || "#"}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
-                aria-label="Telegram"
+                aria-label="Youtube"
               >
-                <Send className="w-5 h-5" />
+                <Youtube className="w-5 h-5" />
               </Link>
               <Link
                 target="_blank"
                 href={appInfo?.footer?.whatsapp_url || "#"}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
-                aria-label="Telegram"
+                aria-label="Whatsapp"
               >
                 <Whatsapp className="w-5 h-5" />
               </Link>
@@ -97,7 +97,7 @@ export default function Footer() {
               </Link>
               <Link
                 target="_blank"
-                href={appInfo?.footer?.telegram_link || "#"}
+                href={appInfo?.footer?.linkedin_link || "#"}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
                 aria-label="LinkedIn"
               >

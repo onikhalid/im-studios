@@ -21,7 +21,7 @@ const TransitioningText: React.FC<TransitioningTextProps> = ({ texts, interval =
 
 
     return (
-        <div className="relative text-white font-poppins [font-size:clamp(3.75rem,22vw,350px)] 2xl:[font-size:clamp(4rem,25vw,380px)] font-bold h-[0.9lh] leading-[0.9] -mt-4 -ml-2.5 md:-ml-4 uppercase">
+        <div className="relative text-white font-poppins [font-size:clamp(3rem,18vw,270px)] 2xl:[font-size:clamp(3.5rem,22vw,320px)] font-bold h-[0.9lh] leading-[0.9] -mt-4 -ml-2.5 md:-ml-4 uppercase">
             <AnimatePresence mode="wait">
                 <motion.h1
                     animate={{ opacity: 1, y: 0 }}
