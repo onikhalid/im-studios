@@ -23,11 +23,8 @@ export function DatePickerDialog({
     onOpenChange,
     onSelect,
     selectedDate,
-    // selectedTime,
-    error,
 }: DatePickerDialogProps) {
     const [date, setDate] = useState<Date | undefined>(selectedDate ? new Date(selectedDate) : undefined)
-    // const [time, setTime] = useState<string | undefined>(selectedTime)
     const [currentMonth, setCurrentMonth] = useState(new Date())
 
     const daysInMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 0).getDate()
@@ -146,7 +143,6 @@ export function DatePickerDialog({
                         </section>
                     )} */}
 
-                    {error && <p className="text-red-500 text-sm">{error}</p>}
                 </div>
             </DialogContent>
         </Dialog>

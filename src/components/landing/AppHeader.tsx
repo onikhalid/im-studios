@@ -30,9 +30,8 @@ export default function AppHeader() {
         <header className="fixed top-0 left-0 right-0 z-50 b backdrop-blur-sm">
             <div className="w-[90%] md:w-[95%] max-w-[1920px] mx-auto md:px-4 h-20 ">
                 <div className="flex items-center justify-between h-full">
-                    <Link href="/" className="flex flex-col items-center text-white font-mono text-base">
+                    <Link href="/" className="flex flex-col items-center text-white font-mono text-base mt-2">
                         <Image src="/im-logo.jpg" width={85} height={85} alt="logo" />
-                        IM STUDIOZ
                     </Link>
                     <nav className="hidden md:flex items-center space-x-12">
                         {
