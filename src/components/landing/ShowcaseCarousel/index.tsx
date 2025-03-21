@@ -20,19 +20,19 @@ const carousels: Carousel[] = [
         id: 1,
         title: `Transforming Sound /n into Art, One Beat /n at a Time.`,
         description: `Every sound tells a story, and we're here to help you craft yours\n. From the raw energy of a live recording to the polished perfection of a studio mix, our passion lies in turning your musical vision into an unforgettable masterpiece. Let us transform every beat into a work of art that resonates with the world.`,
-        image: '/images/caroImage1.png'
+        image: '/images/caroImage1.jpg'
     },
     {
         id: 2,
         title: `Your Voice, Amplified /n Your Story, Heard.`,
         description: `Every great podcast starts with a clear, captivating voice. At our studio, we provide the perfect space and tools to bring your stories to life. From crisp audio recordings to seamless editing, we ensure your podcast resonates with your audience. Whether you're sharing insights, sparking conversations, or entertaining the world, we're here to help you sound your best.`,
-        image: '/images/caroImage2.png'
+        image: '/images/caroImage2.jpg'
     },
     {
         id: 3,
         title: `Where Sound Meets /n Soul , and Creativity /n Knows No Limits`,
         description: `Every sound tells a story, and we're here to help you craft yours. From the raw energy of a live recording to the polished perfection of a studio mix, our passion lies in turning your musical vision into an unforgettable masterpiece. Let us transform every beat into a work of art that resonates with the world.`,
-        image: '/images/caroImage3.png'
+        image: '/images/caroImage3.jpg'
     },
 ]
 const ShowcaseCarousel = () => {
