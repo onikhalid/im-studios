@@ -390,6 +390,7 @@ export const FALLBACK_INFO: TWebAppAPIResponse = {
   },
   "footer": {
     "id": "196bff02-1dea-431c-9d27-1e04a576bd28",
+    youtube_link: "https://www.youtube.com/@imstudioz",
     "whatsapp_url": "https://wa.me/+447415167302?text=",
     "created_at": "2025-02-07T10:44:37.790682Z",
     "updated_at": "2025-03-17T10:55:43.736967Z",
