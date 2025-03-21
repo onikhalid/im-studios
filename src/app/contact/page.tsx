@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import { Facebook, Instagram, Linkedin, Mail, PhoneCall, Twitter } from 'lucide-react'
 import Link from "next/link";
 import Image from "next/image";
-import { Whatsapp } from 'iconsax-react'
+import { Whatsapp, Youtube } from 'iconsax-react'
 
 
 import { useAppInfo } from "@/contexts/info";
@@ -67,6 +67,12 @@ export default function Contact() {
             handle: appInfo?.footer.x_link || "@IMStudioz",
             link: "https://linkedin.com/in/IMStudioz",
             icon: <Linkedin className="w-7 h-7" />,
+        },
+        {
+            platform: "Youtube",
+            handle: appInfo?.footer.youtube_link || "https://youtube.com/IMStudioz",
+            link: appInfo?.footer.youtube_link || "https://youtube.com/in/IMStudioz",
+            icon: <Youtube className="w-7 h-7" />,
         },
     ];
 

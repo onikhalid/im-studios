@@ -91,6 +91,7 @@ interface Footer {
   contact_email: string;
   telegram_link: null;
   mission_statement: string;
+  youtube_link: string;
 }
 
 

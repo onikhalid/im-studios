@@ -39,7 +39,7 @@ export default function Footer() {
               </Link>
               <Link
                 target="_blank"
-                href={appInfo?.footer?.telegram_link || "#"}
+                href={appInfo?.footer?.youtube_link	 || "#"}
                 className="p-3 rounded-full bg-neutral-800 hover:bg-neutral-700 transition-colors"
                 aria-label="Youtube"
               >
