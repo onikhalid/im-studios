@@ -5,7 +5,7 @@ const ServicesPage = () => {
   return (
     <main className="bg-[#0E0E0E]">
       <section
-        className="relative h-screen bg-cover bg-center"
+        className="relative h-screen bg-cover bg-center px-4"
         style={{ backgroundImage: "url('/images/services-bg.jpg')" }}
       >
         <div className="absolute inset-0 bg-black/80" />
