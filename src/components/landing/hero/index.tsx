@@ -21,9 +21,7 @@ export default function Hero() {
                     <h2 className="text-white/70 font-mono text-lg md:text-xl mb-4">
                         WHERE CREATIVITY AND CRAFT MEETS
                     </h2>
-                    {/* <h1 className="text-white font-poppins [font-size:clamp(3.75rem,22vw,350px)] 2xl:[font-size:clamp(4rem,25vw,380px)] font-bold h-[0.9lh] leading-[0.9] -mt-4 -ml-2.5 md:-ml-4">
-                        RHYTHM
-                    </h1> */}
+                  
 
                     <TransitioningText
                         texts={appInfo?.hero_section.hero_text || ["RHYTHM"]}
@@ -39,13 +37,12 @@ export default function Hero() {
                             variant="cta"
                             size="cta"
                             href="/book"
-                        // className=""
                         >
                             {appInfo?.hero_section.cta_text || "Book now"}
                         </LinkButton>
                         <div className="flex items-center gap-2 text-white/70">
                             <Clock className="w-5 h-5" />
-                            <span className="font-mono">Mon-Sat 8:00AM - 9:00PM</span>
+                            <span className="font-mono">Mon-Fri 11:00AM - 11:00PM</span>
                         </div>
                     </div>
                 </div>

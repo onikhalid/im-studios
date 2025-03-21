@@ -14,17 +14,19 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ service, index }: ServiceCardProps) {
+  const img_url = service.icon || `/images/${service.service_name}.jpg` || services_images[index] || "/images/landing/landing-service-mixing.png"
+
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      className="group relative overflow-hidden rounded-[2rem]"
-    >
-      <Link href={`/services?s=${service.service_type.toLowerCase()}`} className="block">
+    <Link href={`/services?s=${service.service_type.toLowerCase()}`} className="block">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.1 }}
+        className="group relative overflow-hidden rounded-[2rem]"
+      >
         <div className="relative flex items-center justify-center aspect-[5/3] overflow-hidden">
           <Image
-            src={service.icon || services_images[index] || "/images/landing/landing-service-mixing.png"}
+            src={img_url}
             alt={service.service_name}
             fill
             className="object-cover transition-transform duration-300 group-hover:scale-110"
@@ -34,8 +36,8 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
             <h3 className="text-xl text-white font-light">{convertKebabAndSnakeToTitleCase(service.service_name)}</h3>
           </div>
         </div>
-      </Link>
-    </motion.div>
+      </motion.div>
+    </Link>
   )
 }
 

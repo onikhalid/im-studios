@@ -281,11 +281,10 @@ export function BookingForm() {
     <>
       <div className="relative w-full mx-auto flex max-lg:flex-col items-center gap-12 gap-y-6 lg:h-screen lg:overflow-y-hidden bg-[#0E0E0E] min-h-screen">
         <section className="pt-12 leading-tight lg:max-h-full lg:w-[40%] 2xl:w-1/2 lg:overflow-hidden lg:sticky top-0 p-6">
-          <h1 className="text-[7rem] lg:text-[8.25rem] xl:text-[10rem] leading-none font-bebas text-white max-md:mt-16">
-            BOOK
-            <span className="md:hidden ml-2">A</span>
+          <h1 className="text-[5rem] lg:text-[7rem] xl:text-[8rem] leading-none font-bebas text-white max-md:mt-16">
+            BOOK A
           </h1>
-          <h1 className="text-[7rem] lg:text-[8.25rem] xl:text-[10rem] leading-none font-bebas text-white">
+          <h1 className="text-[5rem] lg:text-[7rem] xl:text-[8rem] leading-none font-bebas text-white">
             <span className="max-md:hidden">A</span>
             SESSION
           </h1>
