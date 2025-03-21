@@ -14,7 +14,7 @@ export default function Hero() {
             className="relative h-screen bg-cover bg-center snap-start"
             style={{ backgroundImage: "url('/images/hero-bg.jpg')" }}
         >
-            <div className="absolute inset-0 bg-black/80" />
+            <div className="absolute inset-0 bg-black/60" />
 
             <div className="relative flex flex-col h-full pt-20">
                 <div className="grow flex flex-col justify-center items-start w-[90%] md:w-[95%] max-w-[1920px] mx-auto">

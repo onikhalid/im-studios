@@ -79,7 +79,7 @@ export default function Testimonials() {
                                     <h3 className="text-xl md:text-3xl lg:text-4xl font-sans mb-6">
                                         {appInfo?.testimonials[currentIndex].name}
                                     </h3>
-                                    <p className="text-[#99999A] text-sm md:text-lg font-sans leading-loose mb-8 text-balance max-md:px-1.5">
+                                    <p className="text-[#99999A] text-sm md:text-lg font-sans leading-loose mb-8 text-balance max-md:px-1.5 italic">
                                         {appInfo?.testimonials[currentIndex].review  || ""}
                                     </p>
                                     <p className="text-[#99999A] text-sm md:text-base font-sans leading-loose mb-8 text-balance max-md:px-1.5">

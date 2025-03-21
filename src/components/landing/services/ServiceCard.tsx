@@ -14,10 +14,10 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ service, index }: ServiceCardProps) {
-  const img_url = service.icon || `/images/${service.service_name}.jpg` || services_images[index]
+  const img_url = service.icon || `/images/${service.service_name}.png` || services_images[index]
 
   return (
-    <Link href={`/services?s=${service.service_type.toLowerCase()}`} className="block">
+    <Link href={`/book?service=${service.id}`} className="block">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -29,6 +29,7 @@ export function ServiceCard({ service, index }: ServiceCardProps) {
             src={img_url}
             alt={service.service_name}
             fill
+            priority
             className="object-cover transition-transform duration-300 group-hover:scale-110"
           />
           <div className="absolute inset-0 bg-black/60" />
