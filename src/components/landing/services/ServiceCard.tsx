@@ -14,7 +14,7 @@ interface ServiceCardProps {
 }
 
 export function ServiceCard({ service, index }: ServiceCardProps) {
-  const img_url = service.icon || `/images/${service.service_name}.jpg` || services_images[index] || "/images/landing/landing-service-mixing.png"
+  const img_url = service.icon || `/images/${service.service_name}.jpg` || services_images[index]
 
   return (
     <Link href={`/services?s=${service.service_type.toLowerCase()}`} className="block">

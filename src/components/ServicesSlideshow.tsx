@@ -80,7 +80,7 @@ export default function ServicesSlideshow() {
                             <div className="block">
                                 <div className="relative flex items-center justify-center aspect-[5/3] overflow-hidden">
                                     <Image
-                                        src={service.icon || "/images/landing/landing-service-mixing.png"}
+                                        src={service.icon || `/images/${service.service_name}.jpg` || services_images[index] || "/images/landing/landing-service-mixing.png"}
                                         alt={service.service_name}
                                         fill
                                         className="object-cover transition-transform duration-300 group-hover:scale-110"
